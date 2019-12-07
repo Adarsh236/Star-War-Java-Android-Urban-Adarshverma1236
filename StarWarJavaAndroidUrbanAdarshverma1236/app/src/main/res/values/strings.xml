@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Welcome-To-Star-War- World</string>
+    <string name="action_settings">Settings</string>
+    <string name="people_name">Person Name</string>
+    <string name="people_height">Height</string>
+    <string name="people_mass">Mass</string>
+    <string name="people_hair_color">Hair Color</string>
+    <string name="people_skin_color">Skin Color</string>
+    <string name="people_eye_color">Eye Color</string>
+    <string name="people_birth_year">Birth Year</string>
+    <string name="people_gender">Gender</string>
+    <string name="people_homeworld">Home World</string>
+    <string name="people_created">Created</string>
+    <string name="people_edited">Edited</string>
+    <string name="people_url">URL</string>
+
+    <string name="select_label">SELECT</string>
+    <string name="pref_sort_order_key">sortOrder</string>
+    <string name="pref_people">People</string>
+
+    <string name="favorite" translatable="false">Favorite</string>
+
+
+
+    <string name="search">search</string>
+    <string name="previous_page">Previous Page</string>
+    <string name="next_page">Next Page</string>
+</resources>
