@@ -190,8 +190,6 @@ public class DetailActivity extends AppCompatActivity {
         favoriteDbHelper = new FavoriteDbHelper(activity);
         favorite = new Character();
 
-        String rate = mCharacter.getMass();
-
         favorite.setHeight(mcharacter_id);
         favorite.setName(Bname);
         favorite.setUrl(thumbnail);

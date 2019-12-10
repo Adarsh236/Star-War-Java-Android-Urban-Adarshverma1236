@@ -4,6 +4,7 @@
 
     <item android:id="@+id/action_search"
         android:title="@string/search"
+        android:visible="true"
         android:icon="@drawable/ic_loupe"
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
