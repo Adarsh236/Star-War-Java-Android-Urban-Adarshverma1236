@@ -43,10 +43,9 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.My
         viewHolder.mass.setText(mCharacterList.get(i).getMass());
 
         // adding past 3
-        String poster = "https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/stormtrooper-star-wars-storm-trooper-original-oil-painting-black-velvet-r073-ramirezramirez.jpg" ;//+ mCharacterList.get(i).getPosterPath();
+        String poster = "https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/stormtrooper-star-wars-storm-trooper-original-oil-painting-black-velvet-r073-ramirezramirez.jpg";
         // adding past 3
         Glide.with(mContext)
-                // .load(mCharacterList.get(i).getPosterPath())
                 .load(poster)
                 .placeholder(R.drawable.load)
                 .into(viewHolder.thumbnail);
@@ -75,13 +74,7 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.My
                     if (pos != RecyclerView.NO_POSITION) {
                         Character clickedDataItem = mCharacterList.get(pos);
                         Intent intent = new Intent(mContext, DetailActivity.class);
-                       /* intent.putExtra("original_title", mCharacterList.get(pos).getOriginalTitle());
-                        intent.putExtra("poster_path", mCharacterList.get(pos).getPosterPath());
-                        intent.putExtra("overview", mCharacterList.get(pos).getOverview());
-                        intent.putExtra("vote_average", Double.toString(mCharacterList.get(pos).getVoteAverage()));
-                        intent.putExtra("id", mCharacterList.get(pos).getId());
-                        intent.putExtra("release_date", mCharacterList.get(pos).getReleaseDate());*/
-                        intent.putExtra("movies", clickedDataItem);
+                        intent.putExtra("movies", clickedDataItem);//------------
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.startActivity(intent);
                         Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getName(), Toast.LENGTH_SHORT).show();
@@ -93,9 +86,7 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.My
     }
 
 
-
-
-    public void setFilter(ArrayList<Character> newList){
+    public void setFilter(ArrayList<Character> newList) {
         mCharacterList = new ArrayList<>();
         mCharacterList.addAll(newList);
         notifyDataSetChanged();

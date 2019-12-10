@@ -70,17 +70,15 @@ public class Character implements Parcelable {
 
     public Character() {
 
-    }//-------------------------database
+    }
 
-    // String baseImageUrl = "https://image.tmdb.org/t/p/w500";
-    public static final Comparator<Character> BY_NAME_ALPHABETICAL = new Comparator<Character>() {//*String[] search = {"Aladdin", };*//*
+    public static final Comparator<Character> BY_NAME_ALPHABETICAL = new Comparator<Character>() {
         @Override
         public int compare(Character character, Character t1) {
 
-            return character.name.compareToIgnoreCase(t1.name/*toString().concat("Owen Lars")*/);
+            return character.name.compareToIgnoreCase(t1.name);
         }
     };
-
 
 
     public String getName() {
@@ -255,14 +253,18 @@ public class Character implements Parcelable {
         this.birthyear = in.readString();
         this.gender = in.readString();
         this.homeworld = in.readString();
-        this.films = new ArrayList<String>(); in.readList(this.films,String.class.getClassLoader());
+        this.films = new ArrayList<String>();
+        in.readList(this.films, String.class.getClassLoader());
 
-        this.species = new ArrayList<String>(); in.readList(this.species,String.class.getClassLoader());
+        this.species = new ArrayList<String>();
+        in.readList(this.species, String.class.getClassLoader());
 
-        this.vehicles = new ArrayList<String>(); in.readList(this.vehicles, String.class.getClassLoader());
+        this.vehicles = new ArrayList<String>();
+        in.readList(this.vehicles, String.class.getClassLoader());
 
         this.starships = new ArrayList<String>();
         in.readList(this.starships, String.class.getClassLoader());
+
         this.created = in.readString();
         this.edited = in.readString();
         this.url = in.readString();

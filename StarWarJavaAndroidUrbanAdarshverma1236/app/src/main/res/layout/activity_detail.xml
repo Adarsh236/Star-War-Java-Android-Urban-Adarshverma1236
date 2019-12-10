@@ -12,7 +12,6 @@
         android:background="@color/colorPrimary">
 
 
-
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
@@ -22,7 +21,6 @@
             app:expandedTitleMarginStart="72dp"
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
 
 
             <ImageView
@@ -67,6 +65,7 @@
                 android:textAlignment="center"
                 android:textSize="25sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
@@ -88,6 +87,7 @@
                 android:textAlignment="center"
                 android:textSize="25sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/plotsynopsis"
                 android:layout_width="match_parent"
@@ -109,6 +109,7 @@
                 android:textAlignment="center"
                 android:textSize="25sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/userrating"
                 android:layout_width="match_parent"
@@ -130,6 +131,7 @@
                 android:textAlignment="center"
                 android:textSize="25sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/releasedate"
                 android:layout_width="match_parent"
@@ -152,6 +154,7 @@
                 android:textAlignment="center"
                 android:textSize="25sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/eyecolor"
                 android:layout_width="match_parent"
@@ -173,6 +176,7 @@
                 android:textAlignment="center"
                 android:textSize="25sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/birthyear"
                 android:layout_width="match_parent"
@@ -194,6 +198,7 @@
                 android:textAlignment="center"
                 android:textSize="25sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/gender"
                 android:layout_width="match_parent"
@@ -215,6 +220,7 @@
                 android:textAlignment="center"
                 android:textSize="25sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/homeworld"
                 android:layout_width="match_parent"
@@ -236,6 +242,7 @@
                 android:textAlignment="center"
                 android:textSize="25sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/created"
                 android:layout_width="match_parent"
@@ -257,6 +264,7 @@
                 android:textAlignment="center"
                 android:textSize="25sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/edited"
                 android:layout_width="match_parent"
@@ -278,6 +286,7 @@
                 android:textAlignment="center"
                 android:textSize="25sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/url"
                 android:layout_width="match_parent"
@@ -317,271 +326,3 @@
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
-    <!--   <TextView
-                android:id="@+id/charactername"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="10dp"
-                android:text="@string/people_name"
-                android:textAlignment="textStart"
-                android:gravity="start"
-                android:textSize="25sp"
-                android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/charactername"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:padding="@dimen/padding_layout"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/characterheight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:text="@string/people_height"
-                android:textAlignment="textStart"
-                android:gravity="start"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/height"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/characterheight"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:padding="@dimen/padding_layout"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/charactermass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/height"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:text="@string/people_mass"
-                android:textAlignment="textStart"
-                android:gravity="start"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/mass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/charactermass"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:padding="@dimen/padding_layout"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/characterhaircolor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/mass"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:text="@string/people_hair_color"
-                android:textAlignment="textStart"
-                android:gravity="start"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/haircolor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/characterhaircolor"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:padding="@dimen/padding_layout"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/characterskincolor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/haircolor"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:text="@string/people_skin_color"
-                android:textAlignment="textStart"
-                android:gravity="start"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/skincolor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/characterskincolor"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:padding="@dimen/padding_layout"
-                android:textSize="20sp" />
-
-
-
-
-
-
-
-    <TextView
-                android:id="@+id/charactereyecolor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/skincolor"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:text="@string/people_eye_color"
-                android:textAlignment="textStart"
-                android:gravity="start"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/eyecolor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/charactereyecolor"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:padding="@dimen/padding_layout"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/characterbirthyear"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/eyecolor"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:text="@string/people_birth_year"
-                android:textAlignment="textStart"
-                android:gravity="start"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/birthyear"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/characterbirthyear"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:padding="@dimen/padding_layout"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/charactergender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/birthyear"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:text="@string/people_gender"
-                android:textAlignment="textStart"
-                android:gravity="start"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/gender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/charactergender"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:padding="@dimen/padding_layout"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/characterhomeworld"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/gender"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:text="@string/people_homeworld"
-                android:textAlignment="textStart"
-                android:gravity="start"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/homeworld"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/characterhomeworld"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:padding="@dimen/padding_layout"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/charactercreated"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/homeworld"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:text="@string/people_created"
-                android:textAlignment="textStart"
-                android:gravity="start"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/created"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/charactercreated"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:padding="@dimen/padding_layout"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/characteredited"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/created"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:text="@string/people_edited"
-                android:textAlignment="textStart"
-                android:gravity="start"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/edited"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/characteredited"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:padding="@dimen/padding_layout"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/characterurl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/edited"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:text="@string/people_url"
-                android:textAlignment="textStart"
-                android:gravity="start"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/url"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/characterurl"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:padding="@dimen/padding_layout"
-                android:textSize="20sp" />-->

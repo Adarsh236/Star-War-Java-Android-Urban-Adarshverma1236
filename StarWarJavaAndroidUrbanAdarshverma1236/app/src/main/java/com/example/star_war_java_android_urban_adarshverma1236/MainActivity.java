@@ -61,18 +61,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initViews();
-
-                            /*swipeContainer = (SwipeRefreshLayout) findViewById(R.id.main_content);
-                            swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark);
-                            swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
-                                @Override
-                                public void onRefresh(){
-                                    initViews();
-                                    Toast.makeText(MainActivity.this, "Movies Refreshed", Toast.LENGTH_SHORT).show();
-                                }
-                            });*/
     }
 
     //9f
@@ -92,11 +81,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     //10f
 //11s
     private void initViews() {
-
-                         /*   pd = new ProgressDialog(this);
-                            pd.setMessage("Fetching movies...");
-                            pd.setCancelable(false);
-                            pd.show();*/
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
@@ -186,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 public void onFailure(Call<CharactersResponse> call, Throwable t) {
 
                     Log.d("Error", t.getMessage());
-                    Toast.makeText(MainActivity.this, "Error Fetching Data!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Error Fetching Data! OR Internet Problem", Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (Exception e) {
@@ -228,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 public void onFailure(Call<CharactersResponse> call, Throwable t) {
 
                     Log.d("Error", t.getMessage());
-                    Toast.makeText(MainActivity.this, "Error Fetching Data!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Error Fetching Data! OR Internet Problem", Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (Exception e) {
@@ -288,7 +272,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         if (sortOrder.equals(this.getString(R.string.pref_people))) {
             Log.d(LOG_TAG, "Sorting by people");
             loadJSON();
-
 
 
         } else if (sortOrder.equals(this.getString(R.string.favorite))) {   //p3
@@ -373,7 +356,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         public void onFailure(Call<CharactersResponse> call, Throwable t) {
 
                             Log.d("Error", t.getMessage());
-                            Toast.makeText(MainActivity.this, "Error Fetching Data!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Error Fetching Data! OR Internet Problem", Toast.LENGTH_SHORT).show();
                         }
                     });
                 } catch (Exception e) {
@@ -422,14 +405,15 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         public void onFailure(Call<CharactersResponse> call, Throwable t) {
 
                             Log.d("Error", t.getMessage());
-                            Toast.makeText(MainActivity.this, "Error Fetching Data!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Error Fetching Data! OR Internet Problem", Toast.LENGTH_SHORT).show();
                         }
                     });
                 } catch (Exception e) {
                     Log.d("Error", e.getMessage());
                     Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
                 }
-        }}
+            }
+        }
     }
 
     public void loadless(View view) {
@@ -443,46 +427,47 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 this.getString(R.string.pref_people)
         );
         if (sortOrder.equals(this.getString(R.string.pref_people))) {
-        if (LoadLessPageNumber >= FirstPageNumber) {
-            try {
-                if (BuildConfig.THE_STAR_WAR_API_TOKEN.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Please obtain API Key Firstly", Toast.LENGTH_SHORT).show();
-                    pd.dismiss();
-                    return;
-                }
+            if (LoadLessPageNumber >= FirstPageNumber) {
+                try {
+                    if (BuildConfig.THE_STAR_WAR_API_TOKEN.isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "Please obtain API Key Firstly", Toast.LENGTH_SHORT).show();
+                        pd.dismiss();
+                        return;
+                    }
 
-                Client Client = new Client();
-                Service apiService =
-                        Client.getClient().create(Service.class);
-                Call<CharactersResponse> call = apiService.getPeople(LoadLessPageNumber);
-                call.enqueue(new Callback<CharactersResponse>() {
-                    @Override
-                    public void onResponse(Call<CharactersResponse> call, Response<CharactersResponse> response) {
-                        List<Character> characters = response.body().getResults();
-                        //Collections.sort(characters, Character.BY_NAME_ALPHABETICAL);
-                        recyclerView.setAdapter(new CharactersAdapter(getApplicationContext(), characters));
-                        recyclerView.smoothScrollToPosition(0);
-                        if (swipeContainer.isRefreshing()) {
-                            swipeContainer.setRefreshing(false);
+                    Client Client = new Client();
+                    Service apiService =
+                            Client.getClient().create(Service.class);
+                    Call<CharactersResponse> call = apiService.getPeople(LoadLessPageNumber);
+                    call.enqueue(new Callback<CharactersResponse>() {
+                        @Override
+                        public void onResponse(Call<CharactersResponse> call, Response<CharactersResponse> response) {
+                            List<Character> characters = response.body().getResults();
+                            Collections.sort(characters, Character.BY_NAME_ALPHABETICAL);
+                            recyclerView.setAdapter(new CharactersAdapter(getApplicationContext(), characters));
+                            recyclerView.smoothScrollToPosition(0);
+                            if (swipeContainer.isRefreshing()) {
+                                swipeContainer.setRefreshing(false);
+                            }
+                            Toast.makeText(getApplicationContext(), "Current Page: " + LoadMorePageNumber + call, Toast.LENGTH_SHORT).show();
                         }
-                        Toast.makeText(getApplicationContext(), "Current Page: " + LoadMorePageNumber + call, Toast.LENGTH_SHORT).show();
-                    }
 
-                    @Override
-                    public void onFailure(Call<CharactersResponse> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<CharactersResponse> call, Throwable t) {
 
-                        Log.d("Error", t.getMessage());
-                        Toast.makeText(MainActivity.this, "Error Fetching Data!", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } catch (Exception e) {
-                Log.d("Error", e.getMessage());
-                Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+                            Log.d("Error", t.getMessage());
+                            Toast.makeText(MainActivity.this, "Error Fetching Data! OR Internet Problem", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.d("Error", e.getMessage());
+                    Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), "this is the last page ${LastPageNumber}", Toast.LENGTH_SHORT).show();
+                return;
             }
-        } else {
-            Toast.makeText(getApplicationContext(), "this is the last page ${LastPageNumber}", Toast.LENGTH_SHORT).show();
-            return;
-        }} else if (sortOrder.equals(this.getString(R.string.favorite))) {   //p3
+        } else if (sortOrder.equals(this.getString(R.string.favorite))) {   //p3
             Log.d(LOG_TAG, "Sorting by favorite");
             initViews2();
         } else {
@@ -517,7 +502,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
         Log.d(LOG_TAG, "ITEM sz: " + newList.size());
         Log.d(LOG_TAG, "ITEM sz: " + newList);
-        Toast.makeText(getApplicationContext(), newText + "show : " + newList, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(getApplicationContext(), newText + "show : " + newList, Toast.LENGTH_SHORT).show();
         //newList.forEach(T -> System.out.print(T + " ") );
         mCharactersAdapter.setFilter(newList);
 

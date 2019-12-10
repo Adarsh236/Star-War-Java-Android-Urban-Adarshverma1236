@@ -10,6 +10,7 @@ public interface Service {
 
     @GET("people/")
     Call<CharactersResponse> getPeople(@Query("page") int pageIndex);
+
     @GET("species/")
     Call<CharactersResponse> getSpecies(@Query("page=") int pageIndex);
 }

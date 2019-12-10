@@ -24,10 +24,9 @@ import com.google.android.material.snackbar.Snackbar;
 public class DetailActivity extends AppCompatActivity {
 
     TextView Aname, Amass, Ahaircolor, Askincolor, Aeyecolor, Abirthyear, Agender, Ahomeworld, Acreated, Aedited, Aurl;
+    ImageView imageView;
 
-    ImageView imageView;//-----------------------traler-
-
-    private RecyclerView recyclerView;/////trailer
+    private RecyclerView recyclerView;
     private FavoriteDbHelper favoriteDbHelper;
     private Character favorite;
     private final AppCompatActivity activity = DetailActivity.this;
@@ -68,42 +67,9 @@ public class DetailActivity extends AppCompatActivity {
         Aurl = (TextView) findViewById(R.id.url);
 
 
-
         Intent intentThatStartedThisActivity = getIntent();
         if (intentThatStartedThisActivity.hasExtra("movies")) {
 
-            /*movie = getIntent().getParcelableExtra("movies");
-
-            thumbnail = movie.getPosterPath();
-            movieName = movie.getOriginalTitle();
-            synopsis = movie.getOverview();
-            rating = Double.toString(movie.getVoteAverage());
-            dateOfRelease = movie.getReleaseDate();
-            movie_id = movie.getId();
-            *//*
-
-                        String thumbnail = getIntent().getExtras().getString("poster_path");
-                        String movieName = getIntent().getExtras().getString("original_title");
-                        String synopsis = getIntent().getExtras().getString("overview");
-                        String rating = getIntent().getExtras().getString("vote_average");
-                        String dateOfRelease = getIntent().getExtras().getString("release_date");
-            *//*
-
-
-            // adding past 3
-            String poster = "https://image.tmdb.org/t/p/w500" + thumbnail;
-
-
-            Glide.with(this)
-                    // .load(thumbnail)
-                    .load(poster)//p3-----------------
-                    .placeholder(R.drawable.load)
-                    .into(imageView);
-
-            nameOfMovie.setText(movieName);
-            plotSynopsis.setText(synopsis);
-            userRating.setText(rating);
-            releaseDate.setText(dateOfRelease);*/
             mCharacter = new Character();
             mCharacter = getIntent().getParcelableExtra("movies");
 
@@ -122,31 +88,10 @@ public class DetailActivity extends AppCompatActivity {
 
             movie_id = mCharacter.getHeight();
 
-
-
-
-
-
-
-
-            //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-            /*
-
-                        String thumbnail = getIntent().getExtras().getString("poster_path");
-                        String movieName = getIntent().getExtras().getString("original_title");
-                        String synopsis = getIntent().getExtras().getString("overview");
-                        String rating = getIntent().getExtras().getString("vote_average");
-                        String dateOfRelease = getIntent().getExtras().getString("release_date");
-            */
-
-
-            // adding past 3
-            //String poster = "https://image.tmdb.org/t/p/w500" + thumbnail;
-            String poster ="https://mcdn.wallpapersafari.com/medium/96/57/UXFOuz.jpg";
+            String poster = "https://mcdn.wallpapersafari.com/medium/96/57/UXFOuz.jpg";
 
 
             Glide.with(this)
-                    // .load(thumbnail)
                     .load(poster)//p3-----------------
                     .placeholder(R.drawable.load)
                     .into(imageView);
@@ -163,52 +108,15 @@ public class DetailActivity extends AppCompatActivity {
             Aedited.setText(Bedited);
             Aurl.setText(Burl);
 
-
-
-
-
-
-
             //TODO
             ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar)).setTitle(Bname);
 
         } else {
             Toast.makeText(this, "No API Data", Toast.LENGTH_SHORT).show();
         }
-
-
                    /* MaterialFavoriteButton materialFavoriteButtonNice =
                             (MaterialFavoriteButton) findViewById(R.id.favorite_button);*///--------------p11
         MaterialFavoriteButton materialFavoriteButton = (MaterialFavoriteButton) findViewById(R.id.favorite_button);////+++++++++++++p11
-
-                  /*  SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-                    materialFavoriteButton.setOnFavoriteChangeListener(////+++++++++++++p11
-                            new MaterialFavoriteButton.OnFavoriteChangeListener(){
-                                @Override
-                                public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite){
-                                    if (favorite){
-                                        SharedPreferences.Editor editor = getSharedPreferences("com.example.starsample1.DetailActivity", MODE_PRIVATE).edit();
-                                        editor.putBoolean("Favorite Added", true);
-                                        editor.commit();
-                                        saveFavorite();/////p3
-                                        Snackbar.make(buttonView, "Added to Favorite",
-                                                Snackbar.LENGTH_SHORT).show();
-                                    }else{
-                                        int movie_id = getIntent().getExtras().getInt("id");
-                                        favoriteDbHelper = new FavoriteDbHelper(DetailActivity.this);
-                                        favoriteDbHelper.deleteFavorite(movie_id);
-
-                                        SharedPreferences.Editor editor = getSharedPreferences("com.example.starsample1.DetailActivity", MODE_PRIVATE).edit();
-                                        editor.putBoolean("Favorite Removed", true);
-                                        editor.commit();
-                                        Snackbar.make(buttonView, "Removed from Favorite",
-                                                Snackbar.LENGTH_SHORT).show();
-                                    }
-
-                                }
-                            }
-                    );*/
         //++++++++++++++++++++++++++++++++++++++++++++p11
         if (Exists(Bname)) {
             materialFavoriteButton.setFavorite(true);
@@ -275,59 +183,21 @@ public class DetailActivity extends AppCompatActivity {
         boolean exists = (cursor.getCount() > 0);
         cursor.close();
         return exists;
-
         ///////////////////p++++++++++++++++++++++p11
-
-
-        //initViews();// trailer
+        //initViews();
     }
 
-    /* private void initCollapsingToolbar(){
-         final CollapsingToolbarLayout collapsingToolbarLayout =
-                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-         collapsingToolbarLayout.setTitle(" ");
-         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-         appBarLayout.setExpanded(true);
-
-         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener(){
-             boolean isShow = false;
-             int scrollRange = -1;
-
-             @Override
-             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset){
-                 if (scrollRange == -1){
-                     scrollRange = appBarLayout.getTotalScrollRange();
-                 }
-                 if (scrollRange + verticalOffset == 0){
-                     collapsingToolbarLayout.setTitle(getString(R.string.movie_details));
-                     isShow = true;
-                 }else if (isShow){
-                     collapsingToolbarLayout.setTitle(" ");
-                     isShow = false;
-                 }
-             }
-         });
-     }//------------------------------------*/
     public void saveFavorite() {
         favoriteDbHelper = new FavoriteDbHelper(activity);
         favorite = new Character();
 
-                   /* int movie_id = getIntent().getExtras().getInt("id");
-                    String rate = getIntent().getExtras().getString("vote_average");
-                    String poster = getIntent().getExtras().getString("poster_path");
-*/
         String rate = mCharacter.getMass();
-
 
         favorite.setHeight(movie_id);
         favorite.setName(Bname);
         favorite.setUrl(thumbnail);
         favorite.setMass(Bmass);
         favorite.setBirthyear(Bbirthyear);
-                    /*favorite.setOriginalTitle(nameOfMovie.getText().toString().trim());
-                    favorite.setPosterPath(poster);
-                    favorite.setVoteAverage(Double.parseDouble(rate));
-                    favorite.setOverview(plotSynopsis.getText().toString().trim());*/
 
         favoriteDbHelper.addFavorite(favorite);
     }
