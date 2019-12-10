@@ -74,7 +74,7 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.My
                     if (pos != RecyclerView.NO_POSITION) {
                         Character clickedDataItem = mCharacterList.get(pos);
                         Intent intent = new Intent(mContext, DetailActivity.class);
-                        intent.putExtra("movies", clickedDataItem);//------------
+                        intent.putExtra("characters", clickedDataItem);//------------fp3
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.startActivity(intent);
                         Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getName(), Toast.LENGTH_SHORT).show();

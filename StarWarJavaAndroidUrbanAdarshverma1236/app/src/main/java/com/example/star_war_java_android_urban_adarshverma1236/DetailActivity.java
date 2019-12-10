@@ -3,7 +3,6 @@ package com.example.star_war_java_android_urban_adarshverma1236;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Movie;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,7 +34,7 @@ public class DetailActivity extends AppCompatActivity {
 
     Character mCharacter;
     String thumbnail, Bname, Bmass, Bhaircolor, Bskincolor, Beyecolor, Bbirthyear, Bgender, Bhomeworld, Bcreated, Bedited, Burl;
-    String movie_id;//+++++++++++
+    String mcharacter_id;//+++++++++++
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,10 +67,10 @@ public class DetailActivity extends AppCompatActivity {
 
 
         Intent intentThatStartedThisActivity = getIntent();
-        if (intentThatStartedThisActivity.hasExtra("movies")) {
+        if (intentThatStartedThisActivity.hasExtra("characters")) {//************fp3
 
             mCharacter = new Character();
-            mCharacter = getIntent().getParcelableExtra("movies");
+            mCharacter = getIntent().getParcelableExtra("characters");//***********fp3
 
             thumbnail = mCharacter.getUrl();//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
             Bname = mCharacter.getName();
@@ -86,7 +85,7 @@ public class DetailActivity extends AppCompatActivity {
             Bedited = mCharacter.getEdited();
             Burl = mCharacter.getUrl();
 
-            movie_id = mCharacter.getHeight();
+            mcharacter_id = mCharacter.getHeight();
 
             String poster = "https://mcdn.wallpapersafari.com/medium/96/57/UXFOuz.jpg";
 
@@ -130,7 +129,7 @@ public class DetailActivity extends AppCompatActivity {
                                         Snackbar.LENGTH_SHORT).show();
                             } else {
                                 favoriteDbHelper = new FavoriteDbHelper(DetailActivity.this);
-                                favoriteDbHelper.deleteFavorite(Integer.parseInt(movie_id));
+                                favoriteDbHelper.deleteFavorite(Integer.parseInt(mcharacter_id));
                                 Snackbar.make(buttonView, "Removed from Favorite",
                                         Snackbar.LENGTH_SHORT).show();
                             }
@@ -193,7 +192,7 @@ public class DetailActivity extends AppCompatActivity {
 
         String rate = mCharacter.getMass();
 
-        favorite.setHeight(movie_id);
+        favorite.setHeight(mcharacter_id);
         favorite.setName(Bname);
         favorite.setUrl(thumbnail);
         favorite.setMass(Bmass);
