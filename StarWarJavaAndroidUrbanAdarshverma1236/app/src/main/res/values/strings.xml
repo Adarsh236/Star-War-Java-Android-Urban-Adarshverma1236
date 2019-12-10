@@ -17,6 +17,7 @@
     <string name="select_label">SELECT</string>
     <string name="pref_sort_order_key">sortOrder</string>
     <string name="pref_people">People</string>
+    <string name="pref_species">Species</string>
 
     <string name="favorite" translatable="false">Favorite</string>
 

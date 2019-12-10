@@ -6,10 +6,10 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public class Service {
-    @GET("people/")
-    Call<CharactersResponse> getPeople(@Query("page") int pageIndex) {
-        return null;
-    }
+public interface Service {
 
+    @GET("people/")
+    Call<CharactersResponse> getPeople(@Query("page") int pageIndex);
+    @GET("species/")
+    Call<CharactersResponse> getSpecies(@Query("page=") int pageIndex);
 }

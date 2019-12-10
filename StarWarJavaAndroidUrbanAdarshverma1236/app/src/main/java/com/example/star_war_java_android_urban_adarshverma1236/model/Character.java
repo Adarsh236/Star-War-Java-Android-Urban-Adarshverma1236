@@ -44,10 +44,11 @@ public class Character implements Parcelable {
     @SerializedName("url")
     private String url;
 
+
     public Character(String name, String height, String mass, String haircolor,
-                 String skincolor, String eyecolor, String birthyear, String gender,
-                 String homeworld, List<String> films, List<String> species,
-                 List<String> vehicles, List<String> starships, String created, String edited, String url) {
+                     String skincolor, String eyecolor, String birthyear, String gender,
+                     String homeworld, List<String> films, List<String> species,
+                     List<String> vehicles, List<String> starships, String created, String edited, String url/*, Integer id*/) {
         this.name = name;
         this.height = height;
         this.mass = mass;
@@ -64,6 +65,7 @@ public class Character implements Parcelable {
         this.created = created;
         this.edited = edited;
         this.url = url;
+        // this.id = id;
     }
 
     public Character() {
@@ -73,20 +75,18 @@ public class Character implements Parcelable {
     // String baseImageUrl = "https://image.tmdb.org/t/p/w500";
     public static final Comparator<Character> BY_NAME_ALPHABETICAL = new Comparator<Character>() {//*String[] search = {"Aladdin", };*//*
         @Override
-        public int compare(Character movie, Character t1) {
+        public int compare(Character character, Character t1) {
 
-            return movie.name.compareToIgnoreCase(t1.name);
+            return character.name.compareToIgnoreCase(t1.name/*toString().concat("Owen Lars")*/);
         }
     };
 
-   /* public String getPosterPath() {
-        return posterPath;
-        // return "https://image.tmdb.org/t/p/w500"+ posterPath;
-    }*/
+
 
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -94,6 +94,7 @@ public class Character implements Parcelable {
     public String getHeight() {
         return height;
     }
+
     public void setHeight(String height) {
         this.height = height;
     }
@@ -101,6 +102,7 @@ public class Character implements Parcelable {
     public String getMass() {
         return mass;
     }
+
     public void setMass(String mass) {
         this.mass = mass;
     }
@@ -108,6 +110,7 @@ public class Character implements Parcelable {
     public String getHaircolor() {
         return haircolor;
     }
+
     public void setHaircolor(String haircolor) {
         this.haircolor = haircolor;
     }
@@ -115,6 +118,7 @@ public class Character implements Parcelable {
     public String getSkincolor() {
         return skincolor;
     }
+
     public void setSkincolor(String skincolor) {
         this.skincolor = skincolor;
     }
@@ -122,6 +126,7 @@ public class Character implements Parcelable {
     public String getEyecolor() {
         return eyecolor;
     }
+
     public void setEyecolor(String eyecolor) {
         this.eyecolor = eyecolor;
     }
@@ -129,6 +134,7 @@ public class Character implements Parcelable {
     public String getBirthyear() {
         return birthyear;
     }
+
     public void setBirthyear(String birthyear) {
         this.birthyear = birthyear;
     }
@@ -136,6 +142,7 @@ public class Character implements Parcelable {
     public String getGender() {
         return gender;
     }
+
     public void setGender(String gender) {
         this.gender = gender;
     }
@@ -143,6 +150,7 @@ public class Character implements Parcelable {
     public String getHomeworld() {
         return homeworld;
     }
+
     public void setHomeworld(String homeworld) {
         this.homeworld = homeworld;
     }
@@ -150,6 +158,7 @@ public class Character implements Parcelable {
     public List<String> getFilms() {
         return films;
     }
+
     public void setFilms(List<String> films) {
         this.films = films;
     }
@@ -157,6 +166,7 @@ public class Character implements Parcelable {
     public List<String> getSpecies() {
         return species;
     }
+
     public void setSpecies(List<String> species) {
         this.species = species;
     }
@@ -164,6 +174,7 @@ public class Character implements Parcelable {
     public List<String> getVehicles() {
         return vehicles;
     }
+
     public void setVehicles(List<String> vehicles) {
         this.vehicles = vehicles;
     }
@@ -171,6 +182,7 @@ public class Character implements Parcelable {
     public List<String> getStarships() {
         return starships;
     }
+
     public void setStarships(List<String> starships) {
         this.starships = starships;
     }
@@ -178,6 +190,7 @@ public class Character implements Parcelable {
     public String getCreated() {
         return created;
     }
+
     public void setCreated(String created) {
         this.created = created;
     }
@@ -185,6 +198,7 @@ public class Character implements Parcelable {
     public String getEdited() {
         return edited;
     }
+
     public void setEdited(String edited) {
         this.edited = edited;
     }
@@ -192,10 +206,17 @@ public class Character implements Parcelable {
     public String getUrl() {
         return url;
     }
+
     public void setUrl(String url) {
         this.url = url;
     }
 
+    /*public Integer getId() {
+        return id;
+    }
+    public void setId(Integer id) {
+        this.id = id;
+    }*/
 
     @Override
     public int describeContents() {
@@ -220,6 +241,8 @@ public class Character implements Parcelable {
         dest.writeString(this.created);
         dest.writeString(this.edited);
         dest.writeString(this.url);
+
+        // dest.writeValue(this.id);
     }
 
     protected Character(Parcel in) {
@@ -232,16 +255,19 @@ public class Character implements Parcelable {
         this.birthyear = in.readString();
         this.gender = in.readString();
         this.homeworld = in.readString();
-
         this.films = new ArrayList<String>(); in.readList(this.films,String.class.getClassLoader());
-        this.species = new ArrayList<String>(); in.readList(this.species,String.class.getClassLoader());
-        this.vehicles = new ArrayList<String>(); in.readList(this.vehicles, String.class.getClassLoader());
-        this.starships = new ArrayList<String>(); in.readList(this.starships, String.class.getClassLoader());
 
+        this.species = new ArrayList<String>(); in.readList(this.species,String.class.getClassLoader());
+
+        this.vehicles = new ArrayList<String>(); in.readList(this.vehicles, String.class.getClassLoader());
+
+        this.starships = new ArrayList<String>();
+        in.readList(this.starships, String.class.getClassLoader());
         this.created = in.readString();
         this.edited = in.readString();
         this.url = in.readString();
 
+        //this.id = (Integer) in.readValue(Integer.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<Character> CREATOR = new Parcelable.Creator<Character>() {
@@ -256,4 +282,3 @@ public class Character implements Parcelable {
         }
     };
 }
-

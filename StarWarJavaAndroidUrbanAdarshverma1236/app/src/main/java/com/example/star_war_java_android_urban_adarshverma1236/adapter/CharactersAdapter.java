@@ -2,7 +2,6 @@ package com.example.star_war_java_android_urban_adarshverma1236.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Movie;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,33 +22,31 @@ import java.util.List;
 public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<Character> characterList;
+    private List<Character> mCharacterList;
 
     public CharactersAdapter(Context mContext, List<Character> characterList) {
         this.mContext = mContext;
-        this.characterList = characterList;
+        this.mCharacterList = characterList;
     }
 
     @Override
     public CharactersAdapter.MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.people_card, viewGroup, false);
+                .inflate(R.layout.character_card, viewGroup, false);
 
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final CharactersAdapter.MyViewHolder viewHolder, int i) {
-        viewHolder.title.setText(characterList.get(i).getName());
-        viewHolder.userrating.setText(characterList.get(i).getMass());
+        viewHolder.name.setText(mCharacterList.get(i).getName());
+        viewHolder.mass.setText(mCharacterList.get(i).getMass());
 
         // adding past 3
-        String poster =
-                "https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/stormtrooper-star-wars-storm-trooper-original-oil-painting-black-velvet-r073-ramirezramirez.jpg";
-        //+ movieList.get(i).getPosterPath();
+        String poster = "https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/stormtrooper-star-wars-storm-trooper-original-oil-painting-black-velvet-r073-ramirezramirez.jpg" ;//+ mCharacterList.get(i).getPosterPath();
         // adding past 3
         Glide.with(mContext)
-                // .load(movieList.get(i).getPosterPath())
+                // .load(mCharacterList.get(i).getPosterPath())
                 .load(poster)
                 .placeholder(R.drawable.load)
                 .into(viewHolder.thumbnail);
@@ -58,17 +55,17 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.My
 
     @Override
     public int getItemCount() {
-        return characterList.size();
+        return mCharacterList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, userrating;
+        public TextView name, mass;
         public ImageView thumbnail;
 
         public MyViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.title);
-            userrating = (TextView) view.findViewById(R.id.userrating);
+            name = (TextView) view.findViewById(R.id.name);
+            mass = (TextView) view.findViewById(R.id.mass);
             thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
             /*-------------------------------------------------output*/
             view.setOnClickListener(new View.OnClickListener() {
@@ -76,14 +73,14 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.My
                 public void onClick(View v) {
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION) {
-                        Character clickedDataItem = characterList.get(pos);
+                        Character clickedDataItem = mCharacterList.get(pos);
                         Intent intent = new Intent(mContext, DetailActivity.class);
-                       /* intent.putExtra("original_title", movieList.get(pos).getOriginalTitle());
-                        intent.putExtra("poster_path", movieList.get(pos).getPosterPath());
-                        intent.putExtra("overview", movieList.get(pos).getOverview());
-                        intent.putExtra("vote_average", Double.toString(movieList.get(pos).getVoteAverage()));
-                        intent.putExtra("id", movieList.get(pos).getId());
-                        intent.putExtra("release_date", movieList.get(pos).getReleaseDate());*/
+                       /* intent.putExtra("original_title", mCharacterList.get(pos).getOriginalTitle());
+                        intent.putExtra("poster_path", mCharacterList.get(pos).getPosterPath());
+                        intent.putExtra("overview", mCharacterList.get(pos).getOverview());
+                        intent.putExtra("vote_average", Double.toString(mCharacterList.get(pos).getVoteAverage()));
+                        intent.putExtra("id", mCharacterList.get(pos).getId());
+                        intent.putExtra("release_date", mCharacterList.get(pos).getReleaseDate());*/
                         intent.putExtra("movies", clickedDataItem);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.startActivity(intent);
@@ -98,13 +95,12 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.My
 
 
 
-    public void setFilter(ArrayList<Movie> newList){
-        characterList = new ArrayList<>();
-       // characterList.addAll(newList);
+    public void setFilter(ArrayList<Character> newList){
+        mCharacterList = new ArrayList<>();
+        mCharacterList.addAll(newList);
         notifyDataSetChanged();
 
     }
 
 
 }
-
