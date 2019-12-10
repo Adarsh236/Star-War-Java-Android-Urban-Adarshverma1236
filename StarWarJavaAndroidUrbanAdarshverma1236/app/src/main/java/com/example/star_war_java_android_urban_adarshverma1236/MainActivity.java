@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             @Override
             public void onRefresh() {
                 initViews();
-                Toast.makeText(MainActivity.this, "Movies Refreshed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Characters Refreshed", Toast.LENGTH_SHORT).show();
             }
         });
         //loadJSON();
@@ -349,7 +349,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             if (swipeContainer.isRefreshing()) {
                                 swipeContainer.setRefreshing(false);
                             }
-                            Toast.makeText(getApplicationContext(), "Current Page: " + LoadMorePageNumber + apiService, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Current Page: " + LoadMorePageNumber , Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
