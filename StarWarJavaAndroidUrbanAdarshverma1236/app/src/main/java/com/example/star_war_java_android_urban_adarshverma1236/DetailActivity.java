@@ -54,9 +54,9 @@ public class DetailActivity extends AppCompatActivity {
 
         imageView = (ImageView) findViewById(R.id.thumbnail_image_header);
         Aname = (TextView) findViewById(R.id.title);
-        Amass = (TextView) findViewById(R.id.plotsynopsis);
-        Ahaircolor = (TextView) findViewById(R.id.userrating);
-        Askincolor = (TextView) findViewById(R.id.releasedate);
+        Amass = (TextView) findViewById(R.id.mass);
+        Ahaircolor = (TextView) findViewById(R.id.haircolor);
+        Askincolor = (TextView) findViewById(R.id.skincolor);
         Aeyecolor = (TextView) findViewById(R.id.eyecolor);
         Abirthyear = (TextView) findViewById(R.id.birthyear);
         Agender = (TextView) findViewById(R.id.gender);
@@ -167,14 +167,21 @@ public class DetailActivity extends AppCompatActivity {
 
         String[] projection = {
                 FavoriteContract.FavoriteEntry._ID,
-                FavoriteContract.FavoriteEntry.COLUMN_MOVIEID,
-                FavoriteContract.FavoriteEntry.COLUMN_TITLE,
-                FavoriteContract.FavoriteEntry.COLUMN_USERRATING,
-                FavoriteContract.FavoriteEntry.COLUMN_POSTER_PATH,
-                FavoriteContract.FavoriteEntry.COLUMN_PLOT_SYNOPSIS
+                FavoriteContract.FavoriteEntry.COLUMN_CHARACTERID,
+                FavoriteContract.FavoriteEntry.COLUMN_NAME,
+                FavoriteContract.FavoriteEntry.COLUMN_MASS,
+                FavoriteContract.FavoriteEntry.COLUMN_HAIR_COLOR,
+                FavoriteContract.FavoriteEntry.COLUMN_SKIN_COLOR,
+                FavoriteContract.FavoriteEntry.COLUMN_EYE_COLOR,
+                FavoriteContract.FavoriteEntry.COLUMN_BIRTH_YEAR,
+                FavoriteContract.FavoriteEntry.COLUMN_GENDER,
+                FavoriteContract.FavoriteEntry.COLUMN_HOMEWORLD,
+                FavoriteContract.FavoriteEntry.COLUMN_CREATED,
+                FavoriteContract.FavoriteEntry.COLUMN_EDITED,
+                FavoriteContract.FavoriteEntry.COLUMN_URL
 
         };
-        String selection = FavoriteContract.FavoriteEntry.COLUMN_TITLE + " =?";
+        String selection = FavoriteContract.FavoriteEntry.COLUMN_NAME + " =?";
         String[] selectionArgs = {searchItem};
         String limit = "1";
 
@@ -192,9 +199,17 @@ public class DetailActivity extends AppCompatActivity {
 
         favorite.setHeight(mcharacter_id);
         favorite.setName(Bname);
-        favorite.setUrl(thumbnail);
         favorite.setMass(Bmass);
+        favorite.setHaircolor(Bhaircolor);
+        favorite.setSkincolor(Bskincolor);
+        favorite.setEyecolor(Beyecolor);
         favorite.setBirthyear(Bbirthyear);
+        favorite.setGender(Bgender);
+        favorite.setHomeworld(Bhomeworld);
+        favorite.setCreated(Bcreated);
+        favorite.setEdited(Bedited);
+        favorite.setUrl(thumbnail);
+
 
         favoriteDbHelper.addFavorite(favorite);
     }

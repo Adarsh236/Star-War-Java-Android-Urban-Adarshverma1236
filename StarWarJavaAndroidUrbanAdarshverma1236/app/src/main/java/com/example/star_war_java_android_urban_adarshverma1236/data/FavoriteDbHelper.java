@@ -14,7 +14,7 @@ import java.util.List;
 
 public class FavoriteDbHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "favorite.db";
+    private static final String DATABASE_NAME = "favorite1.db";
 
     private static final int DATABASE_VERSION = 1;
 
@@ -41,11 +41,18 @@ public class FavoriteDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         final String SQL_CREATE_FAVORITE_TABLE = "CREATE TABLE " + FavoriteContract.FavoriteEntry.TABLE_NAME + " (" +
                 FavoriteContract.FavoriteEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                FavoriteContract.FavoriteEntry.COLUMN_MOVIEID + " TEXT NOT NULL, " +
-                FavoriteContract.FavoriteEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
-                FavoriteContract.FavoriteEntry.COLUMN_USERRATING + " REAL NOT NULL, " +
-                FavoriteContract.FavoriteEntry.COLUMN_POSTER_PATH + " TEXT NOT NULL, " +
-                FavoriteContract.FavoriteEntry.COLUMN_PLOT_SYNOPSIS + " TEXT NOT NULL" +
+                FavoriteContract.FavoriteEntry.COLUMN_CHARACTERID + " TEXT NOT NULL, " +
+                FavoriteContract.FavoriteEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+                FavoriteContract.FavoriteEntry.COLUMN_MASS + " REAL, " +
+                FavoriteContract.FavoriteEntry.COLUMN_HAIR_COLOR + " TEXT, " +
+                FavoriteContract.FavoriteEntry.COLUMN_SKIN_COLOR + " TEXT, " +
+                FavoriteContract.FavoriteEntry.COLUMN_EYE_COLOR + " TEXT, " +
+                FavoriteContract.FavoriteEntry.COLUMN_BIRTH_YEAR + " TEXT, " +
+                FavoriteContract.FavoriteEntry.COLUMN_GENDER + " TEXT, " +
+                FavoriteContract.FavoriteEntry.COLUMN_HOMEWORLD + " TEXT, " +
+                FavoriteContract.FavoriteEntry.COLUMN_CREATED + " TEXT, " +
+                FavoriteContract.FavoriteEntry.COLUMN_EDITED + " TEXT, " +
+                FavoriteContract.FavoriteEntry.COLUMN_URL + " TEXT " +
                 "); ";
 
         sqLiteDatabase.execSQL(SQL_CREATE_FAVORITE_TABLE);
@@ -61,11 +68,18 @@ public class FavoriteDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(FavoriteContract.FavoriteEntry.COLUMN_MOVIEID, character.getHeight());//+++++++++++++++++++++++++++++
-        values.put(FavoriteContract.FavoriteEntry.COLUMN_TITLE, character.getName());
-        values.put(FavoriteContract.FavoriteEntry.COLUMN_USERRATING, character.getMass());
-        values.put(FavoriteContract.FavoriteEntry.COLUMN_POSTER_PATH, character.getUrl());//+++++++++++++++++++++++
-        values.put(FavoriteContract.FavoriteEntry.COLUMN_PLOT_SYNOPSIS, character.getBirthyear());
+        values.put(FavoriteContract.FavoriteEntry.COLUMN_CHARACTERID, character.getHeight());//+++++++++++++++++++++++++++++
+        values.put(FavoriteContract.FavoriteEntry.COLUMN_NAME, character.getName());
+        values.put(FavoriteContract.FavoriteEntry.COLUMN_MASS, character.getMass());
+        values.put(FavoriteContract.FavoriteEntry.COLUMN_HAIR_COLOR, character.getHaircolor());//+++++++++++++++++++++++
+        values.put(FavoriteContract.FavoriteEntry.COLUMN_SKIN_COLOR, character.getSkincolor());
+        values.put(FavoriteContract.FavoriteEntry.COLUMN_EYE_COLOR, character.getEyecolor());
+        values.put(FavoriteContract.FavoriteEntry.COLUMN_BIRTH_YEAR, character.getBirthyear());
+        values.put(FavoriteContract.FavoriteEntry.COLUMN_GENDER, character.getGender());
+        values.put(FavoriteContract.FavoriteEntry.COLUMN_HOMEWORLD, character.getHomeworld());
+        values.put(FavoriteContract.FavoriteEntry.COLUMN_CREATED, character.getCreated());
+        values.put(FavoriteContract.FavoriteEntry.COLUMN_EDITED, character.getEdited());
+        values.put(FavoriteContract.FavoriteEntry.COLUMN_URL, character.getUrl());
 
         db.insert(FavoriteContract.FavoriteEntry.TABLE_NAME, null, values);
         db.close();
@@ -73,17 +87,24 @@ public class FavoriteDbHelper extends SQLiteOpenHelper {
 
     public void deleteFavorite(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(FavoriteContract.FavoriteEntry.TABLE_NAME, FavoriteContract.FavoriteEntry.COLUMN_MOVIEID + "=" + id, null);
+        db.delete(FavoriteContract.FavoriteEntry.TABLE_NAME, FavoriteContract.FavoriteEntry.COLUMN_CHARACTERID + "=" + id, null);
     }
 
     public List<Character> getAllFavorite() {
         String[] columns = {
                 FavoriteContract.FavoriteEntry._ID,
-                FavoriteContract.FavoriteEntry.COLUMN_MOVIEID,
-                FavoriteContract.FavoriteEntry.COLUMN_TITLE,
-                FavoriteContract.FavoriteEntry.COLUMN_USERRATING,
-                FavoriteContract.FavoriteEntry.COLUMN_POSTER_PATH,
-                FavoriteContract.FavoriteEntry.COLUMN_PLOT_SYNOPSIS
+                FavoriteContract.FavoriteEntry.COLUMN_CHARACTERID,
+                FavoriteContract.FavoriteEntry.COLUMN_NAME,
+                FavoriteContract.FavoriteEntry.COLUMN_MASS,
+                FavoriteContract.FavoriteEntry.COLUMN_HAIR_COLOR,
+                FavoriteContract.FavoriteEntry.COLUMN_SKIN_COLOR,
+                FavoriteContract.FavoriteEntry.COLUMN_EYE_COLOR,
+                FavoriteContract.FavoriteEntry.COLUMN_BIRTH_YEAR,
+                FavoriteContract.FavoriteEntry.COLUMN_GENDER,
+                FavoriteContract.FavoriteEntry.COLUMN_HOMEWORLD,
+                FavoriteContract.FavoriteEntry.COLUMN_CREATED,
+                FavoriteContract.FavoriteEntry.COLUMN_EDITED,
+                FavoriteContract.FavoriteEntry.COLUMN_URL
         };
         String sortOrder =
                 FavoriteContract.FavoriteEntry._ID + " ASC";
@@ -102,11 +123,18 @@ public class FavoriteDbHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Character character = new Character();
-                character.setHeight(cursor.getString(cursor.getColumnIndex((FavoriteContract.FavoriteEntry.COLUMN_MOVIEID))));
-                character.setName(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_TITLE)));
-                character.setMass(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_USERRATING)));
-                character.setUrl(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_POSTER_PATH)));
-                character.setBirthyear(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_PLOT_SYNOPSIS)));
+                character.setHeight(cursor.getString(cursor.getColumnIndex((FavoriteContract.FavoriteEntry.COLUMN_CHARACTERID))));
+                character.setName(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_NAME)));
+                character.setMass(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_MASS)));
+                character.setHaircolor(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_HAIR_COLOR)));
+                character.setSkincolor(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_SKIN_COLOR)));
+                character.setEyecolor(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_EYE_COLOR)));
+                character.setBirthyear(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_BIRTH_YEAR)));
+                character.setGender(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_GENDER)));
+                character.setHomeworld(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_HOMEWORLD)));
+                character.setCreated(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_CREATED)));
+                character.setEdited(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_EDITED)));
+                character.setUrl(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_URL)));
 
                 favoriteList.add(character);
 

@@ -89,7 +89,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/plotsynopsis"
+                android:id="@+id/mass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/charactermass"
@@ -102,7 +102,7 @@
                 android:id="@+id/characterhaircolor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/plotsynopsis"
+                android:layout_below="@+id/mass"
                 android:layout_marginLeft="@dimen/layout_margin_left"
                 android:layout_marginTop="@dimen/layout_margin_top"
                 android:text="@string/people_hair_color"
@@ -111,7 +111,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/userrating"
+                android:id="@+id/haircolor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/characterhaircolor"
@@ -124,7 +124,7 @@
                 android:id="@+id/characterskincolor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/userrating"
+                android:layout_below="@+id/haircolor"
                 android:layout_marginLeft="@dimen/layout_margin_left"
                 android:layout_marginTop="@dimen/layout_margin_top"
                 android:text="@string/people_skin_color"
@@ -133,7 +133,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/releasedate"
+                android:id="@+id/skincolor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/characterskincolor"
@@ -147,7 +147,7 @@
                 android:id="@+id/charactereyecolor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/releasedate"
+                android:layout_below="@+id/skincolor"
                 android:layout_marginLeft="@dimen/layout_margin_left"
                 android:layout_marginTop="@dimen/layout_margin_top"
                 android:text="@string/people_eye_color"
