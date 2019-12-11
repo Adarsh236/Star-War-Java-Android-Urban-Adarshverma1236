@@ -54,6 +54,12 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private int LastpageNumber = 9;
     private int LoadMorePageNumber = 1;
     private int LoadLessPageNumber = 1;
+    private int LastpageNumber2 = 6;
+    private int LoadMorePageNumber2 = 1;
+    private int LoadLessPageNumber2 = 1;
+    private int LastpageNumber3 = 4;
+    private int LoadMorePageNumber3 = 1;
+    private int LoadLessPageNumber3 = 1;
 
 
     //9s
@@ -104,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             @Override
             public void onRefresh() {
                 initViews();
-                Toast.makeText(MainActivity.this, "Characters Refreshed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Page is Refreshed", Toast.LENGTH_SHORT).show();
             }
         });
         //loadJSON();
@@ -193,16 +199,19 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             Client Client = new Client();
             Service apiService =
                     Client.getClient().create(Service.class);//change another
-            Call<CharactersResponse> call = apiService.getSpecies(FirstPageNumber);
+            Call<CharactersResponse> call = apiService.getPlanets(FirstPageNumber);
             call.enqueue(new Callback<CharactersResponse>() {
                 @Override
                 public void onResponse(Call<CharactersResponse> call, Response<CharactersResponse> response) {
                     List<Character> characters = response.body().getResults();
+                    Collections.sort(characters, Character.BY_NAME_ALPHABETICAL);
                     recyclerView.setAdapter(new CharactersAdapter(getApplicationContext(), characters));
                     recyclerView.smoothScrollToPosition(0);
                     if (swipeContainer.isRefreshing()) {
                         swipeContainer.setRefreshing(false);
                     }
+                    LoadMorePageNumber2 = 1;
+                    LoadLessPageNumber2 = 1;
 
                     // pd.dismiss();
                 }
@@ -222,6 +231,50 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     }
 
+    private void loadJSON2() {//--------------------------change2
+
+        try {
+            if (BuildConfig.THE_STAR_WAR_API_TOKEN.isEmpty()) {
+                Toast.makeText(getApplicationContext(), "Please obtain API Key Firstly", Toast.LENGTH_SHORT).show();
+                pd.dismiss();
+                return;
+            }
+
+            Client Client = new Client();
+            Service apiService =
+                    Client.getClient().create(Service.class);//change another
+            Call<CharactersResponse> call = apiService.getStarships(FirstPageNumber);
+            call.enqueue(new Callback<CharactersResponse>() {
+                @Override
+                public void onResponse(Call<CharactersResponse> call, Response<CharactersResponse> response) {
+                    List<Character> characters = response.body().getResults();
+                    Collections.sort(characters, Character.BY_NAME_ALPHABETICAL);
+                    recyclerView.setAdapter(new CharactersAdapter(getApplicationContext(), characters));
+                    recyclerView.smoothScrollToPosition(0);
+                    if (swipeContainer.isRefreshing()) {
+                        swipeContainer.setRefreshing(false);
+                    }
+                    LoadMorePageNumber3 = 1;
+                    LoadLessPageNumber3 = 1;
+
+
+                    // pd.dismiss();
+                }
+
+
+                @Override
+                public void onFailure(Call<CharactersResponse> call, Throwable t) {
+
+                    Log.d("Error", t.getMessage());
+                    Toast.makeText(MainActivity.this, "Error Fetching Data! OR Internet Problem", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            Log.d("Error", e.getMessage());
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+    }
     //3f
 //4s
     @Override
@@ -273,12 +326,14 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             Log.d(LOG_TAG, "Sorting by people");
             loadJSON();
 
-
         } else if (sortOrder.equals(this.getString(R.string.favorite))) {   //p3
             Log.d(LOG_TAG, "Sorting by favorite");
             initViews2();
+        } else if (sortOrder.equals(this.getString(R.string.pref_starships))) {   //p3
+            Log.d(LOG_TAG, "Sorting by startships");
+            loadJSON2();
         } else {
-            Log.d(LOG_TAG, "Sorting by species");
+            Log.d(LOG_TAG, "Sorting by planets");
             loadJSON1();
         }
     }
@@ -319,6 +374,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
 
     public void loadMore(View view) {
+
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String sortOrder = preferences.getString(
                 this.getString(R.string.pref_sort_order_key),
@@ -329,11 +385,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             LoadLessPageNumber = LoadMorePageNumber;
             if (LoadMorePageNumber <= LastpageNumber) {
                 try {
-                    if (BuildConfig.THE_STAR_WAR_API_TOKEN.isEmpty()) {
-                        Toast.makeText(getApplicationContext(), "Please obtain API Key Firstly", Toast.LENGTH_SHORT).show();
-                        pd.dismiss();
-                        return;
-                    }
 
                     Client Client = new Client();
                     final Service apiService =
@@ -349,7 +400,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             if (swipeContainer.isRefreshing()) {
                                 swipeContainer.setRefreshing(false);
                             }
-                            Toast.makeText(getApplicationContext(), "Current Page: " + LoadMorePageNumber , Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Characters: "+"Current Page: " + LoadMorePageNumber , Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -364,18 +415,20 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(getApplicationContext(), "this is the last page ${LastPageNumber}", Toast.LENGTH_SHORT).show();
+                LoadMorePageNumber = LastpageNumber;
+                LoadLessPageNumber = LastpageNumber;
+                Toast.makeText(getApplicationContext(), "Characters: "+"this is the last page: "+ LoadMorePageNumber, Toast.LENGTH_SHORT).show();
                 return;
             }
 
         } else if (sortOrder.equals(this.getString(R.string.favorite))) {   //p3
-            Log.d(LOG_TAG, "Scroll down");
+            Toast.makeText(getApplicationContext(), "Scroll down " , Toast.LENGTH_SHORT).show();
             initViews2();
-        } else {
-            Log.d(LOG_TAG, "Sorting by species");
-            LoadMorePageNumber += 1;
-            LoadLessPageNumber = LoadMorePageNumber;
-            if (LoadMorePageNumber <= LastpageNumber) {
+        }else if (sortOrder.equals(this.getString(R.string.pref_starships))) {   //p3
+            LoadMorePageNumber3 += 1;
+            LoadLessPageNumber3 = LoadMorePageNumber3;
+            Log.d(LOG_TAG, "Sorting by planets");
+            if (LoadMorePageNumber3 <= LastpageNumber3) {
                 try {
                     if (BuildConfig.THE_STAR_WAR_API_TOKEN.isEmpty()) {
                         Toast.makeText(getApplicationContext(), "Please obtain API Key Firstly", Toast.LENGTH_SHORT).show();
@@ -386,17 +439,18 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     Client Client = new Client();
                     Service apiService =
                             Client.getClient().create(Service.class);//change another
-                    Call<CharactersResponse> call = apiService.getSpecies(LoadMorePageNumber);
+                    Call<CharactersResponse> call = apiService.getStarships(LoadMorePageNumber3);
                     call.enqueue(new Callback<CharactersResponse>() {
                         @Override
                         public void onResponse(Call<CharactersResponse> call, Response<CharactersResponse> response) {
                             List<Character> characters = response.body().getResults();
+                            Collections.sort(characters, Character.BY_NAME_ALPHABETICAL);
                             recyclerView.setAdapter(new CharactersAdapter(getApplicationContext(), characters));
                             recyclerView.smoothScrollToPosition(0);
                             if (swipeContainer.isRefreshing()) {
                                 swipeContainer.setRefreshing(false);
                             }
-
+                            Toast.makeText(getApplicationContext(), "Starships: "+"Current Page: " + LoadMorePageNumber3 , Toast.LENGTH_SHORT).show();
                             // pd.dismiss();
                         }
 
@@ -412,14 +466,64 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     Log.d("Error", e.getMessage());
                     Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
                 }
+            }else {
+                LoadMorePageNumber3 = LastpageNumber3;
+                LoadLessPageNumber3 = LastpageNumber3;
+                Toast.makeText(getApplicationContext(), "Starships: "+"this is the last page: "+ LoadMorePageNumber3, Toast.LENGTH_SHORT).show();
+                return;
+            }
+        } else {
+            LoadMorePageNumber2 += 1;
+            LoadLessPageNumber2 = LoadMorePageNumber2;
+            Log.d(LOG_TAG, "Sorting by planets");
+            if (LoadMorePageNumber2 <= LastpageNumber2) {
+                try {
+                    if (BuildConfig.THE_STAR_WAR_API_TOKEN.isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "Please obtain API Key Firstly", Toast.LENGTH_SHORT).show();
+                        pd.dismiss();
+                        return;
+                    }
+
+                    Client Client = new Client();
+                    Service apiService =
+                            Client.getClient().create(Service.class);//change another
+                    Call<CharactersResponse> call = apiService.getPlanets(LoadMorePageNumber2);
+                    call.enqueue(new Callback<CharactersResponse>() {
+                        @Override
+                        public void onResponse(Call<CharactersResponse> call, Response<CharactersResponse> response) {
+                            List<Character> characters = response.body().getResults();
+                            Collections.sort(characters, Character.BY_NAME_ALPHABETICAL);
+                            recyclerView.setAdapter(new CharactersAdapter(getApplicationContext(), characters));
+                            recyclerView.smoothScrollToPosition(0);
+                            if (swipeContainer.isRefreshing()) {
+                                swipeContainer.setRefreshing(false);
+                            }
+                            Toast.makeText(getApplicationContext(), "Planets: "+"Current Page: " + LoadMorePageNumber2 , Toast.LENGTH_SHORT).show();
+                            // pd.dismiss();
+                        }
+
+
+                        @Override
+                        public void onFailure(Call<CharactersResponse> call, Throwable t) {
+
+                            Log.d("Error", t.getMessage());
+                            Toast.makeText(MainActivity.this, "Error Fetching Data! OR Internet Problem", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.d("Error", e.getMessage());
+                    Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }else {
+                LoadMorePageNumber2 = LastpageNumber2;
+                LoadLessPageNumber2 = LastpageNumber2;
+                Toast.makeText(getApplicationContext(), "Planets: "+"this is the last page: "+ LoadMorePageNumber2, Toast.LENGTH_SHORT).show();
+                return;
             }
         }
     }
 
     public void loadless(View view) {
-
-        LoadLessPageNumber -= 1;
-        LoadMorePageNumber -= 1;
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String sortOrder = preferences.getString(
@@ -427,6 +531,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 this.getString(R.string.pref_people)
         );
         if (sortOrder.equals(this.getString(R.string.pref_people))) {
+            LoadLessPageNumber -= 1;
+            LoadMorePageNumber -= 1;
             if (LoadLessPageNumber >= FirstPageNumber) {
                 try {
                     if (BuildConfig.THE_STAR_WAR_API_TOKEN.isEmpty()) {
@@ -449,7 +555,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             if (swipeContainer.isRefreshing()) {
                                 swipeContainer.setRefreshing(false);
                             }
-                            Toast.makeText(getApplicationContext(), "Current Page: " + LoadMorePageNumber + call, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Character: "+"Current Page: " + LoadMorePageNumber + call, Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -464,15 +570,104 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(getApplicationContext(), "this is the last page ${LastPageNumber}", Toast.LENGTH_SHORT).show();
+                LoadLessPageNumber = 1;
+                LoadMorePageNumber = 1;
+                Toast.makeText(getApplicationContext(), "Character: "+" this is the last page: "+ LoadMorePageNumber, Toast.LENGTH_SHORT).show();
                 return;
             }
         } else if (sortOrder.equals(this.getString(R.string.favorite))) {   //p3
-            Log.d(LOG_TAG, "Sorting by favorite");
-            initViews2();
+            Toast.makeText(getApplicationContext(), "Scroll Up", Toast.LENGTH_SHORT).show();
+        } else if (sortOrder.equals(this.getString(R.string.pref_starships))) {   //p3
+            LoadLessPageNumber3 -= 1;
+            LoadMorePageNumber3 -= 1;
+            if (LoadLessPageNumber3 >= FirstPageNumber) {
+                try {
+                    if (BuildConfig.THE_STAR_WAR_API_TOKEN.isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "Please obtain API Key Firstly", Toast.LENGTH_SHORT).show();
+                        pd.dismiss();
+                        return;
+                    }
+
+                    Client Client = new Client();
+                    Service apiService =
+                            Client.getClient().create(Service.class);
+                    Call<CharactersResponse> call = apiService.getStarships(LoadLessPageNumber3);
+                    call.enqueue(new Callback<CharactersResponse>() {
+                        @Override
+                        public void onResponse(Call<CharactersResponse> call, Response<CharactersResponse> response) {
+                            List<Character> characters = response.body().getResults();
+                            Collections.sort(characters, Character.BY_NAME_ALPHABETICAL);
+                            recyclerView.setAdapter(new CharactersAdapter(getApplicationContext(), characters));
+                            recyclerView.smoothScrollToPosition(0);
+                            if (swipeContainer.isRefreshing()) {
+                                swipeContainer.setRefreshing(false);
+                            }
+                            Toast.makeText(getApplicationContext(), "Starships: "+"Current Page: " + LoadMorePageNumber3 + call, Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(Call<CharactersResponse> call, Throwable t) {
+
+                            Log.d("Error", t.getMessage());
+                            Toast.makeText(MainActivity.this, "Error Fetching Data! OR Internet Problem", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.d("Error", e.getMessage());
+                    Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                LoadLessPageNumber3 = 1;
+                LoadMorePageNumber3 = 1;
+                Toast.makeText(getApplicationContext(), "Starships: "+" this is the last page: "+ LoadMorePageNumber3, Toast.LENGTH_SHORT).show();
+                return;
+            }
         } else {
-            Log.d(LOG_TAG, "Sorting by species");
-            loadJSON1();
+            LoadLessPageNumber2 -= 1;
+            LoadMorePageNumber2 -= 1;
+            if (LoadLessPageNumber2 >= FirstPageNumber) {
+                try {
+                    if (BuildConfig.THE_STAR_WAR_API_TOKEN.isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "Please obtain API Key Firstly", Toast.LENGTH_SHORT).show();
+                        pd.dismiss();
+                        return;
+                    }
+
+                    Client Client = new Client();
+                    Service apiService =
+                            Client.getClient().create(Service.class);
+                    Call<CharactersResponse> call = apiService.getPlanets(LoadLessPageNumber2);
+                    call.enqueue(new Callback<CharactersResponse>() {
+                        @Override
+                        public void onResponse(Call<CharactersResponse> call, Response<CharactersResponse> response) {
+                            List<Character> characters = response.body().getResults();
+                            Collections.sort(characters, Character.BY_NAME_ALPHABETICAL);
+                            recyclerView.setAdapter(new CharactersAdapter(getApplicationContext(), characters));
+                            recyclerView.smoothScrollToPosition(0);
+                            if (swipeContainer.isRefreshing()) {
+                                swipeContainer.setRefreshing(false);
+                            }
+                            Toast.makeText(getApplicationContext(), "Planets: "+"Current Page: " + LoadMorePageNumber2 + call, Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(Call<CharactersResponse> call, Throwable t) {
+
+                            Log.d("Error", t.getMessage());
+                            Toast.makeText(MainActivity.this, "Error Fetching Data! OR Internet Problem", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.d("Error", e.getMessage());
+                    Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                LoadLessPageNumber2 = 1;
+                LoadMorePageNumber2 = 1;
+                Toast.makeText(getApplicationContext(), "Planets: "+" this is the last page: "+ LoadMorePageNumber2, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
         }
 
 

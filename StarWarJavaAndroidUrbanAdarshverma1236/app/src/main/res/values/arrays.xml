@@ -2,7 +2,8 @@
 <resources>
     <string-array name="pref_sort_order">
         <item>@string/pref_people</item>
-        <item>@string/pref_species</item>
+        <item>@string/pref_planets</item>
+        <item>@string/pref_starships</item>
         <item>@string/favorite</item>
 
     </string-array>

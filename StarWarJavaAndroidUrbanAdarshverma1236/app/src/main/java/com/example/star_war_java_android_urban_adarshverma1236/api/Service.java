@@ -11,6 +11,9 @@ public interface Service {
     @GET("people/")
     Call<CharactersResponse> getPeople(@Query("page") int pageIndex);
 
-    @GET("species/")
-    Call<CharactersResponse> getSpecies(@Query("page=") int pageIndex);
+    @GET("planets/")
+    Call<CharactersResponse> getPlanets(@Query("page") int pageIndex);
+
+    @GET("starships/")
+    Call<CharactersResponse> getStarships(@Query("page") int pageIndex);
 }
