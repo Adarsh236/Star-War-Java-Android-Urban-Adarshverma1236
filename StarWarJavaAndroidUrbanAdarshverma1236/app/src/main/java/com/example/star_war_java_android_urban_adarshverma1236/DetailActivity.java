@@ -147,9 +147,9 @@ public class DetailActivity extends AppCompatActivity {
                                 Snackbar.make(buttonView, "Added to Favorite",
                                         Snackbar.LENGTH_SHORT).show();
                             } else {
-                                int movie_id = getIntent().getExtras().getInt("id");
+                                int mcharacter_id = getIntent().getExtras().getInt("id");
                                 favoriteDbHelper = new FavoriteDbHelper(DetailActivity.this);
-                                favoriteDbHelper.deleteFavorite(movie_id);
+                                favoriteDbHelper.deleteFavorite(mcharacter_id);
                                 Snackbar.make(buttonView, "Removed from Favorite",
                                         Snackbar.LENGTH_SHORT).show();
                             }
@@ -197,7 +197,7 @@ public class DetailActivity extends AppCompatActivity {
         favoriteDbHelper = new FavoriteDbHelper(activity);
         favorite = new Character();
 
-        favorite.setHeight(mcharacter_id);
+        favorite.setHeight(mcharacter_id);//+++++++++++++++++++++++++++++
         favorite.setName(Bname);
         favorite.setMass(Bmass);
         favorite.setHaircolor(Bhaircolor);

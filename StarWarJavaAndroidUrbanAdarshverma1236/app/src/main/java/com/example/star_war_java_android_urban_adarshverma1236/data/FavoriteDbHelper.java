@@ -71,7 +71,7 @@ public class FavoriteDbHelper extends SQLiteOpenHelper {
         values.put(FavoriteContract.FavoriteEntry.COLUMN_CHARACTERID, character.getHeight());//+++++++++++++++++++++++++++++
         values.put(FavoriteContract.FavoriteEntry.COLUMN_NAME, character.getName());
         values.put(FavoriteContract.FavoriteEntry.COLUMN_MASS, character.getMass());
-        values.put(FavoriteContract.FavoriteEntry.COLUMN_HAIR_COLOR, character.getHaircolor());//+++++++++++++++++++++++
+        values.put(FavoriteContract.FavoriteEntry.COLUMN_HAIR_COLOR, character.getHaircolor());
         values.put(FavoriteContract.FavoriteEntry.COLUMN_SKIN_COLOR, character.getSkincolor());
         values.put(FavoriteContract.FavoriteEntry.COLUMN_EYE_COLOR, character.getEyecolor());
         values.put(FavoriteContract.FavoriteEntry.COLUMN_BIRTH_YEAR, character.getBirthyear());
@@ -123,7 +123,7 @@ public class FavoriteDbHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Character character = new Character();
-                character.setHeight(cursor.getString(cursor.getColumnIndex((FavoriteContract.FavoriteEntry.COLUMN_CHARACTERID))));
+                character.setHeight(cursor.getString(cursor.getColumnIndex((FavoriteContract.FavoriteEntry.COLUMN_CHARACTERID))));//+++++++++++++++++++++++++++++
                 character.setName(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_NAME)));
                 character.setMass(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_MASS)));
                 character.setHaircolor(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_HAIR_COLOR)));

@@ -212,6 +212,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     }
                     LoadMorePageNumber2 = 1;
                     LoadLessPageNumber2 = 1;
+                    mCharacterList = characters;//+++++++fe
 
                     // pd.dismiss();
                 }
@@ -256,6 +257,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     }
                     LoadMorePageNumber3 = 1;
                     LoadLessPageNumber3 = 1;
+                    mCharacterList = characters;//+++++++fe
 
 
                     // pd.dismiss();
@@ -400,6 +402,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             if (swipeContainer.isRefreshing()) {
                                 swipeContainer.setRefreshing(false);
                             }
+                            mCharacterList = characters;//+++++++fe
                             Toast.makeText(getApplicationContext(), "Characters: "+"Current Page: " + LoadMorePageNumber , Toast.LENGTH_SHORT).show();
                         }
 
@@ -450,6 +453,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             if (swipeContainer.isRefreshing()) {
                                 swipeContainer.setRefreshing(false);
                             }
+                            mCharacterList = characters;//+++++++fe
                             Toast.makeText(getApplicationContext(), "Starships: "+"Current Page: " + LoadMorePageNumber3 , Toast.LENGTH_SHORT).show();
                             // pd.dismiss();
                         }
@@ -498,6 +502,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             if (swipeContainer.isRefreshing()) {
                                 swipeContainer.setRefreshing(false);
                             }
+                            mCharacterList = characters;//+++++++fe
                             Toast.makeText(getApplicationContext(), "Planets: "+"Current Page: " + LoadMorePageNumber2 , Toast.LENGTH_SHORT).show();
                             // pd.dismiss();
                         }
@@ -555,6 +560,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             if (swipeContainer.isRefreshing()) {
                                 swipeContainer.setRefreshing(false);
                             }
+                            mCharacterList = characters;//+++++++fe
                             Toast.makeText(getApplicationContext(), "Character: "+"Current Page: " + LoadMorePageNumber + call, Toast.LENGTH_SHORT).show();
                         }
 
@@ -602,6 +608,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             if (swipeContainer.isRefreshing()) {
                                 swipeContainer.setRefreshing(false);
                             }
+                            mCharacterList = characters;//+++++++fe
                             Toast.makeText(getApplicationContext(), "Starships: "+"Current Page: " + LoadMorePageNumber3 + call, Toast.LENGTH_SHORT).show();
                         }
 
@@ -647,6 +654,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             if (swipeContainer.isRefreshing()) {
                                 swipeContainer.setRefreshing(false);
                             }
+                            mCharacterList = characters;//+++++++fe
                             Toast.makeText(getApplicationContext(), "Planets: "+"Current Page: " + LoadMorePageNumber2 + call, Toast.LENGTH_SHORT).show();
                         }
 
@@ -700,6 +708,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         // Toast.makeText(getApplicationContext(), newText + "show : " + newList, Toast.LENGTH_SHORT).show();
         //newList.forEach(T -> System.out.print(T + " ") );
         mCharactersAdapter.setFilter(newList);
+        recyclerView.setAdapter(mCharactersAdapter);//f------------e
+        recyclerView.smoothScrollToPosition(0);
+        Log.d(LOG_TAG, "Changed " + mCharactersAdapter);
 
         return true;
     }
