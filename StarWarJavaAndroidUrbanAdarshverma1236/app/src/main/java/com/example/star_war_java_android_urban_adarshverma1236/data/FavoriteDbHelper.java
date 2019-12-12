@@ -67,8 +67,13 @@ public class FavoriteDbHelper extends SQLiteOpenHelper {
     public void addFavorite(Character character) {
         SQLiteDatabase db = this.getWritableDatabase();
 
+        String[] str = character.getUrl().split("/");//+++++++++++++++++++++++++++++m1
+        //str[((str.length)-1)];
+        //int idmo = Integer.parseInt(str[str.length-1]);//+++++++++++++++++++++++++++++m1
+        String  idmo = (str[str.length-1]);//+++++++++++++++++++++++++++++m1
+
         ContentValues values = new ContentValues();
-        values.put(FavoriteContract.FavoriteEntry.COLUMN_CHARACTERID, character.getHeight());//+++++++++++++++++++++++++++++
+        values.put(FavoriteContract.FavoriteEntry.COLUMN_CHARACTERID, idmo);//+++++++++++++++++++++++++++++
         values.put(FavoriteContract.FavoriteEntry.COLUMN_NAME, character.getName());
         values.put(FavoriteContract.FavoriteEntry.COLUMN_MASS, character.getMass());
         values.put(FavoriteContract.FavoriteEntry.COLUMN_HAIR_COLOR, character.getHaircolor());

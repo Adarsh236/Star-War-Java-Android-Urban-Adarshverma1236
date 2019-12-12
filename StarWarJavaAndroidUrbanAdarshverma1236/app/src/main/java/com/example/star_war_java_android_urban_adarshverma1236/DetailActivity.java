@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,12 +14,25 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.star_war_java_android_urban_adarshverma1236.adapter.CharactersAdapter;
+import com.example.star_war_java_android_urban_adarshverma1236.api.Client;
+import com.example.star_war_java_android_urban_adarshverma1236.api.Service;
 import com.example.star_war_java_android_urban_adarshverma1236.data.FavoriteContract;
 import com.example.star_war_java_android_urban_adarshverma1236.data.FavoriteDbHelper;
 import com.example.star_war_java_android_urban_adarshverma1236.model.Character;
+import com.example.star_war_java_android_urban_adarshverma1236.model.CharactersResponse;
 import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Collections;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.example.star_war_java_android_urban_adarshverma1236.MainActivity.LOG_TAG;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -84,8 +98,11 @@ public class DetailActivity extends AppCompatActivity {
             Bcreated = mCharacter.getCreated();
             Bedited = mCharacter.getEdited();
             Burl = mCharacter.getUrl();
-
-            mcharacter_id = mCharacter.getHeight();
+            String[] str = mCharacter.getUrl().split("/");//+++++++++++++++++++++++++++++m1
+            //str[((str.length)-1)];
+            //int idmo = Integer.parseInt(str[str.length-1]);//+++++++++++++++++++++++++++++m1
+            String  idmo = (str[str.length-1]);//+++++++++++++++++++++++++++++m1
+            mcharacter_id = idmo;
 
             String poster = "https://mcdn.wallpapersafari.com/medium/96/57/UXFOuz.jpg";
 
@@ -117,50 +134,53 @@ public class DetailActivity extends AppCompatActivity {
                             (MaterialFavoriteButton) findViewById(R.id.favorite_button);*///--------------p11
         MaterialFavoriteButton materialFavoriteButton = (MaterialFavoriteButton) findViewById(R.id.favorite_button);////+++++++++++++p11
         //++++++++++++++++++++++++++++++++++++++++++++p11
-        if (Exists(Bname)) {
-            materialFavoriteButton.setFavorite(true);
-            materialFavoriteButton.setOnFavoriteChangeListener(
-                    new MaterialFavoriteButton.OnFavoriteChangeListener() {
-                        @Override
-                        public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
-                            if (favorite == true) {
-                                saveFavorite();
-                                Snackbar.make(buttonView, "Added to Favorite",
-                                        Snackbar.LENGTH_SHORT).show();
-                            } else {
-                                favoriteDbHelper = new FavoriteDbHelper(DetailActivity.this);
-                                favoriteDbHelper.deleteFavorite(Integer.parseInt(mcharacter_id));
-                                Snackbar.make(buttonView, "Removed from Favorite",
-                                        Snackbar.LENGTH_SHORT).show();
+        try {
+            if (Exists(Bname)) {
+                materialFavoriteButton.setFavorite(true);
+                materialFavoriteButton.setOnFavoriteChangeListener(
+                        new MaterialFavoriteButton.OnFavoriteChangeListener() {
+                            @Override
+                            public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
+                                if (favorite == true) {
+                                    saveFavorite();
+                                    Snackbar.make(buttonView, "Added to Favorite",
+                                            Snackbar.LENGTH_SHORT).show();
+                                } else {
+                                    favoriteDbHelper = new FavoriteDbHelper(DetailActivity.this);
+                                    favoriteDbHelper.deleteFavorite(Integer.parseInt(mcharacter_id));
+                                    Snackbar.make(buttonView, "Removed from Favorite",
+                                            Snackbar.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    });
+                        });
 
 
-        } else {
-            materialFavoriteButton.setOnFavoriteChangeListener(
-                    new MaterialFavoriteButton.OnFavoriteChangeListener() {
-                        @Override
-                        public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
-                            if (favorite == true) {
-                                saveFavorite();
-                                Snackbar.make(buttonView, "Added to Favorite",
-                                        Snackbar.LENGTH_SHORT).show();
-                            } else {
-                                int mcharacter_id = getIntent().getExtras().getInt("id");
-                                favoriteDbHelper = new FavoriteDbHelper(DetailActivity.this);
-                                favoriteDbHelper.deleteFavorite(mcharacter_id);
-                                Snackbar.make(buttonView, "Removed from Favorite",
-                                        Snackbar.LENGTH_SHORT).show();
+            } else {
+                materialFavoriteButton.setOnFavoriteChangeListener(
+                        new MaterialFavoriteButton.OnFavoriteChangeListener() {
+                            @Override
+                            public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
+                                if (favorite == true) {
+                                    saveFavorite();
+                                    Snackbar.make(buttonView, "Added to Favorite",
+                                            Snackbar.LENGTH_SHORT).show();
+                                } else {
+                                    int mcharacter_id = getIntent().getExtras().getInt("id");
+                                    favoriteDbHelper = new FavoriteDbHelper(DetailActivity.this);
+                                    favoriteDbHelper.deleteFavorite(mcharacter_id);
+                                    Snackbar.make(buttonView, "Removed from Favorite",
+                                            Snackbar.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    });
+                        });
 
 
+            }
+        } catch (Exception e) {
+            Log.d("Error", e.getMessage());
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
-
         //initViews();
-
     }
 
     public boolean Exists(String searchItem) {
@@ -181,6 +201,7 @@ public class DetailActivity extends AppCompatActivity {
                 FavoriteContract.FavoriteEntry.COLUMN_URL
 
         };
+
         String selection = FavoriteContract.FavoriteEntry.COLUMN_NAME + " =?";
         String[] selectionArgs = {searchItem};
         String limit = "1";
@@ -196,8 +217,16 @@ public class DetailActivity extends AppCompatActivity {
     public void saveFavorite() {
         favoriteDbHelper = new FavoriteDbHelper(activity);
         favorite = new Character();
+        //modify final part
+        String[] str = Burl.split("/");//+++++++++++++++++++++++++++++m1
+        //str[((str.length)-1)];
+        int idmo = Integer.parseInt(str[str.length-1]);//+++++++++++++++++++++++++++++m1
 
-        favorite.setHeight(mcharacter_id);//+++++++++++++++++++++++++++++
+        favorite.setHeight(mcharacter_id);//+++++++++++++++++++++++++++++m1
+        Log.d(LOG_TAG, "id 1: " + mcharacter_id);//+++++++++++++++++++++++++++++m1
+        Log.d(LOG_TAG, "id 2: " + idmo);//+++++++++++++++++++++++++++++m1
+        Log.d(LOG_TAG, "id 3: " + Burl);//+++++++++++++++++++++++++++++m1
+
         favorite.setName(Bname);
         favorite.setMass(Bmass);
         favorite.setHaircolor(Bhaircolor);
