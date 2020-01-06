@@ -39,10 +39,11 @@ public class DetailActivity extends AppCompatActivity {
     TextView Aname, Amass, Ahaircolor, Askincolor, Aeyecolor, Abirthyear, Agender, Ahomeworld, Acreated, Aedited, Aurl;
     ImageView imageView;
 
-    private RecyclerView recyclerView;
+    //private RecyclerView recyclerView;
     private FavoriteDbHelper favoriteDbHelper;
     private Character favorite;
     private final AppCompatActivity activity = DetailActivity.this;
+    private String PictureURL2 = "https://mcdn.wallpapersafari.com/medium/96/57/UXFOuz.jpg";
 
     private SQLiteDatabase mDb;
 
@@ -59,8 +60,6 @@ public class DetailActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //initCollapsingToolbar();
-        /*+++++++++++++++++++++++++++++++++++++++++++++++++++++++p11*/
         //TODO
         FavoriteDbHelper dbHelper = new FavoriteDbHelper(this);
         mDb = dbHelper.getWritableDatabase();
@@ -98,17 +97,14 @@ public class DetailActivity extends AppCompatActivity {
             Bcreated = mCharacter.getCreated();
             Bedited = mCharacter.getEdited();
             Burl = mCharacter.getUrl();
-            String[] str = mCharacter.getUrl().split("/");//+++++++++++++++++++++++++++++m1
-            //str[((str.length)-1)];
-            //int idmo = Integer.parseInt(str[str.length-1]);//+++++++++++++++++++++++++++++m1
-            String  idmo = (str[str.length-1]);//+++++++++++++++++++++++++++++m1
+            String[] str = mCharacter.getUrl().split("/");//splitting for ID
+            String idmo = (str[str.length - 1]);
             mcharacter_id = idmo;
 
-            String poster = "https://mcdn.wallpapersafari.com/medium/96/57/UXFOuz.jpg";
-
+            String poster = PictureURL2;
 
             Glide.with(this)
-                    .load(poster)//p3-----------------
+                    .load(poster)
                     .placeholder(R.drawable.load)
                     .into(imageView);
 
@@ -130,10 +126,7 @@ public class DetailActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No API Data", Toast.LENGTH_SHORT).show();
         }
-                   /* MaterialFavoriteButton materialFavoriteButtonNice =
-                            (MaterialFavoriteButton) findViewById(R.id.favorite_button);*///--------------p11
-        MaterialFavoriteButton materialFavoriteButton = (MaterialFavoriteButton) findViewById(R.id.favorite_button);////+++++++++++++p11
-        //++++++++++++++++++++++++++++++++++++++++++++p11
+        MaterialFavoriteButton materialFavoriteButton = (MaterialFavoriteButton) findViewById(R.id.favorite_button);
         try {
             if (Exists(Bname)) {
                 materialFavoriteButton.setFavorite(true);
@@ -180,7 +173,6 @@ public class DetailActivity extends AppCompatActivity {
             Log.d("Error", e.getMessage());
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
-        //initViews();
     }
 
     public boolean Exists(String searchItem) {
@@ -210,22 +202,18 @@ public class DetailActivity extends AppCompatActivity {
         boolean exists = (cursor.getCount() > 0);
         cursor.close();
         return exists;
-        ///////////////////p++++++++++++++++++++++p11
-        //initViews();
     }
 
     public void saveFavorite() {
         favoriteDbHelper = new FavoriteDbHelper(activity);
         favorite = new Character();
-        //modify final part
-        String[] str = Burl.split("/");//+++++++++++++++++++++++++++++m1
-        //str[((str.length)-1)];
-        int idmo = Integer.parseInt(str[str.length-1]);//+++++++++++++++++++++++++++++m1
+        String[] str = Burl.split("/");//Splitting for ID
+        int idmo = Integer.parseInt(str[str.length - 1]);
 
-        favorite.setHeight(mcharacter_id);//+++++++++++++++++++++++++++++m1
-        Log.d(LOG_TAG, "id 1: " + mcharacter_id);//+++++++++++++++++++++++++++++m1
-        Log.d(LOG_TAG, "id 2: " + idmo);//+++++++++++++++++++++++++++++m1
-        Log.d(LOG_TAG, "id 3: " + Burl);//+++++++++++++++++++++++++++++m1
+        favorite.setHeight(mcharacter_id);
+        Log.d(LOG_TAG, "id 1: " + mcharacter_id);
+        Log.d(LOG_TAG, "id 2: " + idmo);
+        Log.d(LOG_TAG, "id 3: " + Burl);
 
         favorite.setName(Bname);
         favorite.setMass(Bmass);
@@ -239,8 +227,6 @@ public class DetailActivity extends AppCompatActivity {
         favorite.setEdited(Bedited);
         favorite.setUrl(thumbnail);
 
-
         favoriteDbHelper.addFavorite(favorite);
     }
-
 }

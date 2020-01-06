@@ -10,7 +10,6 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Character implements Parcelable {
-    /*------------------------------------------------------*/
     @SerializedName("name")
     private String name;
     @SerializedName("height")
@@ -48,7 +47,7 @@ public class Character implements Parcelable {
     public Character(String name, String height, String mass, String haircolor,
                      String skincolor, String eyecolor, String birthyear, String gender,
                      String homeworld, List<String> films, List<String> species,
-                     List<String> vehicles, List<String> starships, String created, String edited, String url/*, Integer id*/) {
+                     List<String> vehicles, List<String> starships, String created, String edited, String url) {
         this.name = name;
         this.height = height;
         this.mass = mass;
@@ -65,13 +64,12 @@ public class Character implements Parcelable {
         this.created = created;
         this.edited = edited;
         this.url = url;
-        // this.id = id;
     }
 
     public Character() {
 
     }
-
+    // comparator for name
     public static final Comparator<Character> BY_NAME_ALPHABETICAL = new Comparator<Character>() {
         @Override
         public int compare(Character character, Character t1) {
@@ -209,13 +207,6 @@ public class Character implements Parcelable {
         this.url = url;
     }
 
-    /*public Integer getId() {
-        return id;
-    }
-    public void setId(Integer id) {
-        this.id = id;
-    }*/
-
     @Override
     public int describeContents() {
         return 0;
@@ -239,8 +230,6 @@ public class Character implements Parcelable {
         dest.writeString(this.created);
         dest.writeString(this.edited);
         dest.writeString(this.url);
-
-        // dest.writeValue(this.id);
     }
 
     protected Character(Parcel in) {
@@ -269,7 +258,6 @@ public class Character implements Parcelable {
         this.edited = in.readString();
         this.url = in.readString();
 
-        //this.id = (Integer) in.readValue(Integer.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<Character> CREATOR = new Parcelable.Creator<Character>() {

@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private int LoadLessPageNumber3 = 1;
 
 
-    //9s
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,8 +69,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         initViews();
     }
 
-    //9f
-//10s
     public Activity getActivity() {
         Context context = this;
         while (context instanceof ContextWrapper) {
@@ -84,8 +81,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     }
 
-    //10f
-//11s
     private void initViews() {
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -101,9 +96,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mCharactersAdapter);
         mCharactersAdapter.notifyDataSetChanged();
-        // p3
+
         favoriteDbHelper = new FavoriteDbHelper(activity);//p3
-        //adding
+
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.main_content);
         swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -113,12 +108,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 Toast.makeText(MainActivity.this, "Page is Refreshed", Toast.LENGTH_SHORT).show();
             }
         });
-        //loadJSON();
         checkSortOrder();
     }
 
-    //11f
-//13s
     // adding p3 favorite
     private void initViews2() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -140,8 +132,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         getAllFavorite();
     }
 
-    //13f
-//2s
     // finish
     private void loadJSON() {/*--------------------------change*/
 
@@ -185,8 +175,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
     }
 
-    //2f
-//3f
     private void loadJSON1() {//--------------------------change2
 
         try {
@@ -214,7 +202,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     LoadLessPageNumber2 = 1;
                     mCharacterList = characters;//+++++++fe
 
-                    // pd.dismiss();
                 }
 
 
@@ -258,9 +245,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     LoadMorePageNumber3 = 1;
                     LoadLessPageNumber3 = 1;
                     mCharacterList = characters;//+++++++fe
-
-
-                    // pd.dismiss();
                 }
 
 
@@ -277,8 +261,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
 
     }
-    //3f
-//4s
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -288,8 +271,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         return true;
     }
 
-    //4f
-//5s
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -306,18 +287,12 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
     }
 
-    //5f
-//6s
-    /*----------------------------change3*/
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         Log.d(LOG_TAG, "Preferences updated");
         checkSortOrder();
     }
 
-    /*----------------------------change4*/
-//6f
-//7s
     public void checkSortOrder() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String sortOrder = preferences.getString(
@@ -328,10 +303,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             Log.d(LOG_TAG, "Sorting by people");
             loadJSON();
 
-        } else if (sortOrder.equals(this.getString(R.string.favorite))) {   //p3
+        } else if (sortOrder.equals(this.getString(R.string.favorite))) {
             Log.d(LOG_TAG, "Sorting by favorite");
             initViews2();
-        } else if (sortOrder.equals(this.getString(R.string.pref_starships))) {   //p3
+        } else if (sortOrder.equals(this.getString(R.string.pref_starships))) {
             Log.d(LOG_TAG, "Sorting by startships");
             loadJSON2();
         } else {
@@ -340,9 +315,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
     }
 
-    //7f
-//8s
-    /*----------------------------change5*/
     @Override
     public void onResume() {
         super.onResume();
@@ -403,7 +375,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                 swipeContainer.setRefreshing(false);
                             }
                             mCharacterList = characters;//+++++++fe
-                            Toast.makeText(getApplicationContext(), "Characters: "+"Current Page: " + LoadMorePageNumber , Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Characters: " + "Current Page: " + LoadMorePageNumber, Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -420,14 +392,14 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             } else {
                 LoadMorePageNumber = LastpageNumber;
                 LoadLessPageNumber = LastpageNumber;
-                Toast.makeText(getApplicationContext(), "Characters: "+"this is the last page: "+ LoadMorePageNumber, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Characters: " + "this is the last page: " + LoadMorePageNumber, Toast.LENGTH_SHORT).show();
                 return;
             }
 
         } else if (sortOrder.equals(this.getString(R.string.favorite))) {   //p3
-            Toast.makeText(getApplicationContext(), "Scroll down " , Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Scroll down ", Toast.LENGTH_SHORT).show();
             initViews2();
-        }else if (sortOrder.equals(this.getString(R.string.pref_starships))) {   //p3
+        } else if (sortOrder.equals(this.getString(R.string.pref_starships))) {   //p3
             LoadMorePageNumber3 += 1;
             LoadLessPageNumber3 = LoadMorePageNumber3;
             Log.d(LOG_TAG, "Sorting by planets");
@@ -454,7 +426,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                 swipeContainer.setRefreshing(false);
                             }
                             mCharacterList = characters;//+++++++fe
-                            Toast.makeText(getApplicationContext(), "Starships: "+"Current Page: " + LoadMorePageNumber3 , Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Starships: " + "Current Page: " + LoadMorePageNumber3, Toast.LENGTH_SHORT).show();
                             // pd.dismiss();
                         }
 
@@ -470,10 +442,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     Log.d("Error", e.getMessage());
                     Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
                 }
-            }else {
+            } else {
                 LoadMorePageNumber3 = LastpageNumber3;
                 LoadLessPageNumber3 = LastpageNumber3;
-                Toast.makeText(getApplicationContext(), "Starships: "+"this is the last page: "+ LoadMorePageNumber3, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Starships: " + "this is the last page: " + LoadMorePageNumber3, Toast.LENGTH_SHORT).show();
                 return;
             }
         } else {
@@ -503,7 +475,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                 swipeContainer.setRefreshing(false);
                             }
                             mCharacterList = characters;//+++++++fe
-                            Toast.makeText(getApplicationContext(), "Planets: "+"Current Page: " + LoadMorePageNumber2 , Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Planets: " + "Current Page: " + LoadMorePageNumber2, Toast.LENGTH_SHORT).show();
                             // pd.dismiss();
                         }
 
@@ -519,10 +491,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     Log.d("Error", e.getMessage());
                     Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
                 }
-            }else {
+            } else {
                 LoadMorePageNumber2 = LastpageNumber2;
                 LoadLessPageNumber2 = LastpageNumber2;
-                Toast.makeText(getApplicationContext(), "Planets: "+"this is the last page: "+ LoadMorePageNumber2, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Planets: " + "this is the last page: " + LoadMorePageNumber2, Toast.LENGTH_SHORT).show();
                 return;
             }
         }
@@ -561,7 +533,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                 swipeContainer.setRefreshing(false);
                             }
                             mCharacterList = characters;//+++++++fe
-                            Toast.makeText(getApplicationContext(), "Character: "+"Current Page: " + LoadMorePageNumber + call, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Character: " + "Current Page: " + LoadMorePageNumber + call, Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -578,7 +550,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             } else {
                 LoadLessPageNumber = 1;
                 LoadMorePageNumber = 1;
-                Toast.makeText(getApplicationContext(), "Character: "+" this is the last page: "+ LoadMorePageNumber, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Character: " + " this is the last page: " + LoadMorePageNumber, Toast.LENGTH_SHORT).show();
                 return;
             }
         } else if (sortOrder.equals(this.getString(R.string.favorite))) {   //p3
@@ -609,7 +581,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                 swipeContainer.setRefreshing(false);
                             }
                             mCharacterList = characters;//+++++++fe
-                            Toast.makeText(getApplicationContext(), "Starships: "+"Current Page: " + LoadMorePageNumber3 + call, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Starships: " + "Current Page: " + LoadMorePageNumber3 + call, Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -626,7 +598,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             } else {
                 LoadLessPageNumber3 = 1;
                 LoadMorePageNumber3 = 1;
-                Toast.makeText(getApplicationContext(), "Starships: "+" this is the last page: "+ LoadMorePageNumber3, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Starships: " + " this is the last page: " + LoadMorePageNumber3, Toast.LENGTH_SHORT).show();
                 return;
             }
         } else {
@@ -655,7 +627,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                 swipeContainer.setRefreshing(false);
                             }
                             mCharacterList = characters;//+++++++fe
-                            Toast.makeText(getApplicationContext(), "Planets: "+"Current Page: " + LoadMorePageNumber2 + call, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Planets: " + "Current Page: " + LoadMorePageNumber2 + call, Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -672,12 +644,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             } else {
                 LoadLessPageNumber2 = 1;
                 LoadMorePageNumber2 = 1;
-                Toast.makeText(getApplicationContext(), "Planets: "+" this is the last page: "+ LoadMorePageNumber2, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Planets: " + " this is the last page: " + LoadMorePageNumber2, Toast.LENGTH_SHORT).show();
                 return;
             }
-
         }
-
 
     }
 
@@ -708,14 +678,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         // Toast.makeText(getApplicationContext(), newText + "show : " + newList, Toast.LENGTH_SHORT).show();
         //newList.forEach(T -> System.out.print(T + " ") );
         mCharactersAdapter.setFilter(newList);
-        recyclerView.setAdapter(mCharactersAdapter);//f------------e
+        recyclerView.setAdapter(mCharactersAdapter);
         recyclerView.smoothScrollToPosition(0);
         Log.d(LOG_TAG, "Changed " + mCharactersAdapter);
-
         return true;
     }
-
-
 }
-
-//12f

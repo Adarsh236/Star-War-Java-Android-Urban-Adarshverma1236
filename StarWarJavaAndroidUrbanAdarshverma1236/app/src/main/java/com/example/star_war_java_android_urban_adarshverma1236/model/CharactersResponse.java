@@ -91,6 +91,4 @@ public class CharactersResponse implements Parcelable {
             return new CharactersResponse[size];
         }
     };
-
-
 }

@@ -23,6 +23,7 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.My
 
     private Context mContext;
     private List<Character> mCharacterList;
+    private String PictureURL1 = "https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/stormtrooper-star-wars-storm-trooper-original-oil-painting-black-velvet-r073-ramirezramirez.jpg";
 
     public CharactersAdapter(Context mContext, List<Character> characterList) {
         this.mContext = mContext;
@@ -42,9 +43,8 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.My
         viewHolder.name.setText(mCharacterList.get(i).getName());
         viewHolder.mass.setText(mCharacterList.get(i).getMass());
 
-        // adding past 3
-        String poster = "https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/stormtrooper-star-wars-storm-trooper-original-oil-painting-black-velvet-r073-ramirezramirez.jpg";
-        // adding past 3
+        String poster = PictureURL1;
+
         Glide.with(mContext)
                 .load(poster)
                 .placeholder(R.drawable.load)
@@ -66,7 +66,6 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.My
             name = (TextView) view.findViewById(R.id.name);
             mass = (TextView) view.findViewById(R.id.mass);
             thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
-            /*-------------------------------------------------output*/
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -74,24 +73,19 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.My
                     if (pos != RecyclerView.NO_POSITION) {
                         Character clickedDataItem = mCharacterList.get(pos);
                         Intent intent = new Intent(mContext, DetailActivity.class);
-                        intent.putExtra("characters", clickedDataItem);//------------fp3
+                        intent.putExtra("characters", clickedDataItem);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.startActivity(intent);
                         Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getName(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
-
         }
     }
-
 
     public void setFilter(ArrayList<Character> newList) {
         mCharacterList = new ArrayList<>();
         mCharacterList.addAll(newList);
         notifyDataSetChanged();
-
     }
-
-
 }
