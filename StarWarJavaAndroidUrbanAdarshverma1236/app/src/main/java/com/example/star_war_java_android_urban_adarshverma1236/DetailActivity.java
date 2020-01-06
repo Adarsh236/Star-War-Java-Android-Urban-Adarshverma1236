@@ -39,7 +39,6 @@ public class DetailActivity extends AppCompatActivity {
     TextView Aname, Amass, Ahaircolor, Askincolor, Aeyecolor, Abirthyear, Agender, Ahomeworld, Acreated, Aedited, Aurl;
     ImageView imageView;
 
-    //private RecyclerView recyclerView;
     private FavoriteDbHelper favoriteDbHelper;
     private Character favorite;
     private final AppCompatActivity activity = DetailActivity.this;
@@ -57,13 +56,11 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //TODO
         FavoriteDbHelper dbHelper = new FavoriteDbHelper(this);
         mDb = dbHelper.getWritableDatabase();
-        /*+++++++++++++++++++++++++++++++++++++++++++++++++++++++p11*/
 
         imageView = (ImageView) findViewById(R.id.thumbnail_image_header);
         Aname = (TextView) findViewById(R.id.title);
@@ -191,7 +188,6 @@ public class DetailActivity extends AppCompatActivity {
                 FavoriteContract.FavoriteEntry.COLUMN_CREATED,
                 FavoriteContract.FavoriteEntry.COLUMN_EDITED,
                 FavoriteContract.FavoriteEntry.COLUMN_URL
-
         };
 
         String selection = FavoriteContract.FavoriteEntry.COLUMN_NAME + " =?";

@@ -71,7 +71,7 @@ public class FavoriteDbHelper extends SQLiteOpenHelper {
         String  idmo = (str[str.length-1]);//split to get ID
 
         ContentValues values = new ContentValues();
-        values.put(FavoriteContract.FavoriteEntry.COLUMN_CHARACTERID, idmo);//+++++++++++++++++++++++++++++
+        values.put(FavoriteContract.FavoriteEntry.COLUMN_CHARACTERID, idmo);
         values.put(FavoriteContract.FavoriteEntry.COLUMN_NAME, character.getName());
         values.put(FavoriteContract.FavoriteEntry.COLUMN_MASS, character.getMass());
         values.put(FavoriteContract.FavoriteEntry.COLUMN_HAIR_COLOR, character.getHaircolor());
@@ -126,7 +126,7 @@ public class FavoriteDbHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Character character = new Character();
-                character.setHeight(cursor.getString(cursor.getColumnIndex((FavoriteContract.FavoriteEntry.COLUMN_CHARACTERID))));//+++++++++++++++++++++++++++++
+                character.setHeight(cursor.getString(cursor.getColumnIndex((FavoriteContract.FavoriteEntry.COLUMN_CHARACTERID))));
                 character.setName(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_NAME)));
                 character.setMass(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_MASS)));
                 character.setHaircolor(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_HAIR_COLOR)));
