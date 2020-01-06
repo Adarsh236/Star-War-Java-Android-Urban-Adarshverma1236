@@ -80,12 +80,12 @@ public class DetailActivity extends AppCompatActivity {
 
 
         Intent intentThatStartedThisActivity = getIntent();
-        if (intentThatStartedThisActivity.hasExtra("characters")) {//************fp3
+        if (intentThatStartedThisActivity.hasExtra("characters")) {
 
             mCharacter = new Character();
-            mCharacter = getIntent().getParcelableExtra("characters");//***********fp3
+            mCharacter = getIntent().getParcelableExtra("characters");
 
-            thumbnail = mCharacter.getUrl();//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            thumbnail = mCharacter.getUrl();
             Bname = mCharacter.getName();
             Bmass = mCharacter.getMass();
             Bhaircolor = mCharacter.getHaircolor();

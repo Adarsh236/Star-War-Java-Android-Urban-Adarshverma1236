@@ -54,13 +54,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private int LastpageNumber = 9;
     private int LoadMorePageNumber = 1;
     private int LoadLessPageNumber = 1;
-    private int LastpageNumber2 = 6;
-    private int LoadMorePageNumber2 = 1;
-    private int LoadLessPageNumber2 = 1;
-    private int LastpageNumber3 = 4;
-    private int LoadMorePageNumber3 = 1;
-    private int LoadLessPageNumber3 = 1;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         checkSortOrder();
     }
 
-    // adding p3 favorite
+    // adding favorite
     private void initViews2() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
@@ -133,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     // finish
-    private void loadJSON() {/*--------------------------change*/
+    private void loadJSON() {
 
         try {
             if (BuildConfig.THE_STAR_WAR_API_TOKEN.isEmpty()) {
@@ -141,7 +134,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 pd.dismiss();
                 return;
             }
-
             Client Client = new Client();
             Service apiService =
                     Client.getClient().create(Service.class);
@@ -159,9 +151,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     LoadMorePageNumber = 1;
                     LoadLessPageNumber = 1;
                     mCharacterList = characters;
-
                 }
-
                 @Override
                 public void onFailure(Call<CharactersResponse> call, Throwable t) {
 
@@ -173,93 +163,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             Log.d("Error", e.getMessage());
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void loadJSON1() {//--------------------------change2
-
-        try {
-            if (BuildConfig.THE_STAR_WAR_API_TOKEN.isEmpty()) {
-                Toast.makeText(getApplicationContext(), "Please obtain API Key Firstly", Toast.LENGTH_SHORT).show();
-                pd.dismiss();
-                return;
-            }
-
-            Client Client = new Client();
-            Service apiService =
-                    Client.getClient().create(Service.class);//change another
-            Call<CharactersResponse> call = apiService.getPlanets(FirstPageNumber);
-            call.enqueue(new Callback<CharactersResponse>() {
-                @Override
-                public void onResponse(Call<CharactersResponse> call, Response<CharactersResponse> response) {
-                    List<Character> characters = response.body().getResults();
-                    Collections.sort(characters, Character.BY_NAME_ALPHABETICAL);
-                    recyclerView.setAdapter(new CharactersAdapter(getApplicationContext(), characters));
-                    recyclerView.smoothScrollToPosition(0);
-                    if (swipeContainer.isRefreshing()) {
-                        swipeContainer.setRefreshing(false);
-                    }
-                    LoadMorePageNumber2 = 1;
-                    LoadLessPageNumber2 = 1;
-                    mCharacterList = characters;//+++++++fe
-
-                }
-
-
-                @Override
-                public void onFailure(Call<CharactersResponse> call, Throwable t) {
-
-                    Log.d("Error", t.getMessage());
-                    Toast.makeText(MainActivity.this, "Error Fetching Data! OR Internet Problem", Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (Exception e) {
-            Log.d("Error", e.getMessage());
-            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    private void loadJSON2() {//--------------------------change2
-
-        try {
-            if (BuildConfig.THE_STAR_WAR_API_TOKEN.isEmpty()) {
-                Toast.makeText(getApplicationContext(), "Please obtain API Key Firstly", Toast.LENGTH_SHORT).show();
-                pd.dismiss();
-                return;
-            }
-
-            Client Client = new Client();
-            Service apiService =
-                    Client.getClient().create(Service.class);//change another
-            Call<CharactersResponse> call = apiService.getStarships(FirstPageNumber);
-            call.enqueue(new Callback<CharactersResponse>() {
-                @Override
-                public void onResponse(Call<CharactersResponse> call, Response<CharactersResponse> response) {
-                    List<Character> characters = response.body().getResults();
-                    Collections.sort(characters, Character.BY_NAME_ALPHABETICAL);
-                    recyclerView.setAdapter(new CharactersAdapter(getApplicationContext(), characters));
-                    recyclerView.smoothScrollToPosition(0);
-                    if (swipeContainer.isRefreshing()) {
-                        swipeContainer.setRefreshing(false);
-                    }
-                    LoadMorePageNumber3 = 1;
-                    LoadLessPageNumber3 = 1;
-                    mCharacterList = characters;//+++++++fe
-                }
-
-
-                @Override
-                public void onFailure(Call<CharactersResponse> call, Throwable t) {
-
-                    Log.d("Error", t.getMessage());
-                    Toast.makeText(MainActivity.this, "Error Fetching Data! OR Internet Problem", Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (Exception e) {
-            Log.d("Error", e.getMessage());
-            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
-        }
-
     }
 
     @Override
@@ -275,10 +178,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_settings:
-                /*-----------------------c6 settings --> setting*/
                 Intent intent = new Intent(this, SettingActivity.class);
                 startActivity(intent);
-                /*-----------------------c6*/
                 return true;
             case R.id.action_search:
                 return true;
@@ -303,15 +204,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             Log.d(LOG_TAG, "Sorting by people");
             loadJSON();
 
-        } else if (sortOrder.equals(this.getString(R.string.favorite))) {
+        } if  (sortOrder.equals(this.getString(R.string.favorite))) {
             Log.d(LOG_TAG, "Sorting by favorite");
             initViews2();
-        } else if (sortOrder.equals(this.getString(R.string.pref_starships))) {
-            Log.d(LOG_TAG, "Sorting by startships");
-            loadJSON2();
-        } else {
-            Log.d(LOG_TAG, "Sorting by planets");
-            loadJSON1();
         }
     }
 
@@ -326,9 +221,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
     }
 
-    //8sf
-//12s
-    // adding p3
     private void getAllFavorite() {
         new AsyncTask<Void, Void, Void>() {
             @Override
@@ -399,104 +291,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         } else if (sortOrder.equals(this.getString(R.string.favorite))) {   //p3
             Toast.makeText(getApplicationContext(), "Scroll down ", Toast.LENGTH_SHORT).show();
             initViews2();
-        } else if (sortOrder.equals(this.getString(R.string.pref_starships))) {   //p3
-            LoadMorePageNumber3 += 1;
-            LoadLessPageNumber3 = LoadMorePageNumber3;
-            Log.d(LOG_TAG, "Sorting by planets");
-            if (LoadMorePageNumber3 <= LastpageNumber3) {
-                try {
-                    if (BuildConfig.THE_STAR_WAR_API_TOKEN.isEmpty()) {
-                        Toast.makeText(getApplicationContext(), "Please obtain API Key Firstly", Toast.LENGTH_SHORT).show();
-                        pd.dismiss();
-                        return;
-                    }
-
-                    Client Client = new Client();
-                    Service apiService =
-                            Client.getClient().create(Service.class);//change another
-                    Call<CharactersResponse> call = apiService.getStarships(LoadMorePageNumber3);
-                    call.enqueue(new Callback<CharactersResponse>() {
-                        @Override
-                        public void onResponse(Call<CharactersResponse> call, Response<CharactersResponse> response) {
-                            List<Character> characters = response.body().getResults();
-                            Collections.sort(characters, Character.BY_NAME_ALPHABETICAL);
-                            recyclerView.setAdapter(new CharactersAdapter(getApplicationContext(), characters));
-                            recyclerView.smoothScrollToPosition(0);
-                            if (swipeContainer.isRefreshing()) {
-                                swipeContainer.setRefreshing(false);
-                            }
-                            mCharacterList = characters;//+++++++fe
-                            Toast.makeText(getApplicationContext(), "Starships: " + "Current Page: " + LoadMorePageNumber3, Toast.LENGTH_SHORT).show();
-                            // pd.dismiss();
-                        }
-
-
-                        @Override
-                        public void onFailure(Call<CharactersResponse> call, Throwable t) {
-
-                            Log.d("Error", t.getMessage());
-                            Toast.makeText(MainActivity.this, "Error Fetching Data! OR Internet Problem", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } catch (Exception e) {
-                    Log.d("Error", e.getMessage());
-                    Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                LoadMorePageNumber3 = LastpageNumber3;
-                LoadLessPageNumber3 = LastpageNumber3;
-                Toast.makeText(getApplicationContext(), "Starships: " + "this is the last page: " + LoadMorePageNumber3, Toast.LENGTH_SHORT).show();
-                return;
-            }
         } else {
-            LoadMorePageNumber2 += 1;
-            LoadLessPageNumber2 = LoadMorePageNumber2;
-            Log.d(LOG_TAG, "Sorting by planets");
-            if (LoadMorePageNumber2 <= LastpageNumber2) {
-                try {
-                    if (BuildConfig.THE_STAR_WAR_API_TOKEN.isEmpty()) {
-                        Toast.makeText(getApplicationContext(), "Please obtain API Key Firstly", Toast.LENGTH_SHORT).show();
-                        pd.dismiss();
-                        return;
-                    }
 
-                    Client Client = new Client();
-                    Service apiService =
-                            Client.getClient().create(Service.class);//change another
-                    Call<CharactersResponse> call = apiService.getPlanets(LoadMorePageNumber2);
-                    call.enqueue(new Callback<CharactersResponse>() {
-                        @Override
-                        public void onResponse(Call<CharactersResponse> call, Response<CharactersResponse> response) {
-                            List<Character> characters = response.body().getResults();
-                            Collections.sort(characters, Character.BY_NAME_ALPHABETICAL);
-                            recyclerView.setAdapter(new CharactersAdapter(getApplicationContext(), characters));
-                            recyclerView.smoothScrollToPosition(0);
-                            if (swipeContainer.isRefreshing()) {
-                                swipeContainer.setRefreshing(false);
-                            }
-                            mCharacterList = characters;//+++++++fe
-                            Toast.makeText(getApplicationContext(), "Planets: " + "Current Page: " + LoadMorePageNumber2, Toast.LENGTH_SHORT).show();
-                            // pd.dismiss();
-                        }
-
-
-                        @Override
-                        public void onFailure(Call<CharactersResponse> call, Throwable t) {
-
-                            Log.d("Error", t.getMessage());
-                            Toast.makeText(MainActivity.this, "Error Fetching Data! OR Internet Problem", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } catch (Exception e) {
-                    Log.d("Error", e.getMessage());
-                    Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                LoadMorePageNumber2 = LastpageNumber2;
-                LoadLessPageNumber2 = LastpageNumber2;
-                Toast.makeText(getApplicationContext(), "Planets: " + "this is the last page: " + LoadMorePageNumber2, Toast.LENGTH_SHORT).show();
-                return;
-            }
         }
     }
 
@@ -553,102 +349,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 Toast.makeText(getApplicationContext(), "Character: " + " this is the last page: " + LoadMorePageNumber, Toast.LENGTH_SHORT).show();
                 return;
             }
-        } else if (sortOrder.equals(this.getString(R.string.favorite))) {   //p3
+        } else if (sortOrder.equals(this.getString(R.string.favorite))) {
             Toast.makeText(getApplicationContext(), "Scroll Up", Toast.LENGTH_SHORT).show();
-        } else if (sortOrder.equals(this.getString(R.string.pref_starships))) {   //p3
-            LoadLessPageNumber3 -= 1;
-            LoadMorePageNumber3 -= 1;
-            if (LoadLessPageNumber3 >= FirstPageNumber) {
-                try {
-                    if (BuildConfig.THE_STAR_WAR_API_TOKEN.isEmpty()) {
-                        Toast.makeText(getApplicationContext(), "Please obtain API Key Firstly", Toast.LENGTH_SHORT).show();
-                        pd.dismiss();
-                        return;
-                    }
-
-                    Client Client = new Client();
-                    Service apiService =
-                            Client.getClient().create(Service.class);
-                    Call<CharactersResponse> call = apiService.getStarships(LoadLessPageNumber3);
-                    call.enqueue(new Callback<CharactersResponse>() {
-                        @Override
-                        public void onResponse(Call<CharactersResponse> call, Response<CharactersResponse> response) {
-                            List<Character> characters = response.body().getResults();
-                            Collections.sort(characters, Character.BY_NAME_ALPHABETICAL);
-                            recyclerView.setAdapter(new CharactersAdapter(getApplicationContext(), characters));
-                            recyclerView.smoothScrollToPosition(0);
-                            if (swipeContainer.isRefreshing()) {
-                                swipeContainer.setRefreshing(false);
-                            }
-                            mCharacterList = characters;//+++++++fe
-                            Toast.makeText(getApplicationContext(), "Starships: " + "Current Page: " + LoadMorePageNumber3 + call, Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void onFailure(Call<CharactersResponse> call, Throwable t) {
-
-                            Log.d("Error", t.getMessage());
-                            Toast.makeText(MainActivity.this, "Error Fetching Data! OR Internet Problem", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } catch (Exception e) {
-                    Log.d("Error", e.getMessage());
-                    Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                LoadLessPageNumber3 = 1;
-                LoadMorePageNumber3 = 1;
-                Toast.makeText(getApplicationContext(), "Starships: " + " this is the last page: " + LoadMorePageNumber3, Toast.LENGTH_SHORT).show();
-                return;
-            }
-        } else {
-            LoadLessPageNumber2 -= 1;
-            LoadMorePageNumber2 -= 1;
-            if (LoadLessPageNumber2 >= FirstPageNumber) {
-                try {
-                    if (BuildConfig.THE_STAR_WAR_API_TOKEN.isEmpty()) {
-                        Toast.makeText(getApplicationContext(), "Please obtain API Key Firstly", Toast.LENGTH_SHORT).show();
-                        pd.dismiss();
-                        return;
-                    }
-
-                    Client Client = new Client();
-                    Service apiService =
-                            Client.getClient().create(Service.class);
-                    Call<CharactersResponse> call = apiService.getPlanets(LoadLessPageNumber2);
-                    call.enqueue(new Callback<CharactersResponse>() {
-                        @Override
-                        public void onResponse(Call<CharactersResponse> call, Response<CharactersResponse> response) {
-                            List<Character> characters = response.body().getResults();
-                            Collections.sort(characters, Character.BY_NAME_ALPHABETICAL);
-                            recyclerView.setAdapter(new CharactersAdapter(getApplicationContext(), characters));
-                            recyclerView.smoothScrollToPosition(0);
-                            if (swipeContainer.isRefreshing()) {
-                                swipeContainer.setRefreshing(false);
-                            }
-                            mCharacterList = characters;//+++++++fe
-                            Toast.makeText(getApplicationContext(), "Planets: " + "Current Page: " + LoadMorePageNumber2 + call, Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void onFailure(Call<CharactersResponse> call, Throwable t) {
-
-                            Log.d("Error", t.getMessage());
-                            Toast.makeText(MainActivity.this, "Error Fetching Data! OR Internet Problem", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } catch (Exception e) {
-                    Log.d("Error", e.getMessage());
-                    Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                LoadLessPageNumber2 = 1;
-                LoadMorePageNumber2 = 1;
-                Toast.makeText(getApplicationContext(), "Planets: " + " this is the last page: " + LoadMorePageNumber2, Toast.LENGTH_SHORT).show();
-                return;
-            }
         }
-
+         else {
+        }
     }
 
 
