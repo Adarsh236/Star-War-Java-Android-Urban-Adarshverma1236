@@ -1,13 +1,13 @@
 package com.example.star_war_java_android_urban_adarshverma1236;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -34,28 +35,28 @@ import com.example.star_war_java_android_urban_adarshverma1236.model.CharactersR
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static androidx.core.view.MenuItemCompat.getActionView;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener, SearchView.OnQueryTextListener {
 
     private RecyclerView recyclerView;
     private CharactersAdapter mCharactersAdapter;
     private List<Character> mCharacterList;
-    ProgressDialog pd;
     private SwipeRefreshLayout swipeContainer;
     private FavoriteDbHelper favoriteDbHelper;
     private AppCompatActivity activity = MainActivity.this;
     public static final String LOG_TAG = CharactersAdapter.class.getName();
     private int FirstPageNumber = 1;
-    private int LastpageNumber = 9;
     private int LoadMorePageNumber = 1;
     private int LoadLessPageNumber = 1;
+    ProgressDialog pd;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,21 +65,12 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     public Activity getActivity() {
-        Context context = this;
-        while (context instanceof ContextWrapper) {
-            if (context instanceof Activity) {
-                return (Activity) context;
-            }
-            context = ((ContextWrapper) context).getBaseContext();
-        }
-        return null;
-
+        return this;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void initViews() {
-
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-
+        recyclerView = findViewById(R.id.recycler_view);
         mCharacterList = new ArrayList<>();
         mCharactersAdapter = new CharactersAdapter(this, mCharacterList);
 
@@ -91,9 +83,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         recyclerView.setAdapter(mCharactersAdapter);
         mCharactersAdapter.notifyDataSetChanged();
 
-        favoriteDbHelper = new FavoriteDbHelper(activity);//p3
+        favoriteDbHelper = new FavoriteDbHelper(activity);
 
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.main_content);
+        swipeContainer = findViewById(R.id.main_content);
         swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -107,8 +99,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     // adding favorite
     private void initViews2() {
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-
+        recyclerView = findViewById(R.id.recycler_view);
         mCharacterList = new ArrayList<>();
         mCharactersAdapter = new CharactersAdapter(this, mCharacterList);
 
@@ -122,11 +113,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         recyclerView.setAdapter(mCharactersAdapter);
         mCharactersAdapter.notifyDataSetChanged();
         favoriteDbHelper = new FavoriteDbHelper(activity);
-
         getAllFavorite();
     }
 
     // calling api
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void loadJSON() {
 
         try {
@@ -136,8 +127,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 return;
             }
             Client Client = new Client();
-            Service apiService =
-                    Client.getClient().create(Service.class);
+            Service apiService = Client.getClient().create(Service.class);
             Call<CharactersResponse> call = apiService.getPeople(FirstPageNumber);
             call.enqueue(new Callback<CharactersResponse>() {
                 @Override
@@ -153,15 +143,17 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     LoadLessPageNumber = 1;
                     mCharacterList = characters;
                 }
+
+                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                 @Override
                 public void onFailure(Call<CharactersResponse> call, Throwable t) {
 
-                    Log.d("Error", t.getMessage());
+                    Log.d("Error", Objects.requireNonNull(t.getMessage()));
                     Toast.makeText(MainActivity.this, "Error Fetching Data! OR Internet Problem", Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (Exception e) {
-            Log.d("Error", e.getMessage());
+            Log.d("Error", Objects.requireNonNull(e.getMessage()));
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
@@ -170,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem search = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) getActionView(search);
+        SearchView searchView = (SearchView) search.getActionView();
         searchView.setOnQueryTextListener(this);
         return true;
     }
@@ -189,12 +181,14 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         Log.d(LOG_TAG, "Preferences updated");
         checkSortOrder();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void checkSortOrder() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String sortOrder = preferences.getString(
@@ -205,23 +199,25 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             Log.d(LOG_TAG, "Sorting by people");
             loadJSON();
 
-        } if  (sortOrder.equals(this.getString(R.string.favorite))) {
+        }
+        if (sortOrder.equals(this.getString(R.string.favorite))) {
             Log.d(LOG_TAG, "Sorting by favorite");
             initViews2();
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onResume() {
         super.onResume();
         if (mCharacterList.isEmpty()) {
             checkSortOrder();
         } else {
-
             checkSortOrder();
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     private void getAllFavorite() {
         new AsyncTask<Void, Void, Void>() {
             @Override
@@ -239,7 +235,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }.execute();
     }
 
-
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void loadMore(View view) {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -250,9 +246,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         if (sortOrder.equals(this.getString(R.string.pref_people))) {
             LoadMorePageNumber += 1;
             LoadLessPageNumber = LoadMorePageNumber;
-            if (LoadMorePageNumber <= LastpageNumber) {
+            int LastPageNumber = 9;
+            if (LoadMorePageNumber <= LastPageNumber) {
                 try {
-
                     Client Client = new Client();
                     final Service apiService =
                             Client.getClient().create(Service.class);
@@ -267,38 +263,36 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             if (swipeContainer.isRefreshing()) {
                                 swipeContainer.setRefreshing(false);
                             }
-                            mCharacterList = characters;//+++++++fe
+                            mCharacterList = characters;
                             Toast.makeText(getApplicationContext(), "Characters: " + "Current Page: " + LoadMorePageNumber, Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
                         public void onFailure(Call<CharactersResponse> call, Throwable t) {
 
-                            Log.d("Error", t.getMessage());
+                            Log.d("Error", Objects.requireNonNull(t.getMessage()));
                             Toast.makeText(MainActivity.this, "Error Fetching Data! OR Internet Problem", Toast.LENGTH_SHORT).show();
                         }
                     });
                 } catch (Exception e) {
-                    Log.d("Error", e.getMessage());
+                    Log.d("Error", Objects.requireNonNull(e.getMessage()));
                     Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
                 }
             } else {
-                LoadMorePageNumber = LastpageNumber;
-                LoadLessPageNumber = LastpageNumber;
+                LoadMorePageNumber = LastPageNumber;
+                LoadLessPageNumber = LastPageNumber;
                 Toast.makeText(getApplicationContext(), "Characters: " + "this is the last page: " + LoadMorePageNumber, Toast.LENGTH_SHORT).show();
                 return;
             }
-
-        } else if (sortOrder.equals(this.getString(R.string.favorite))) {   //p3
+        }
+        if (sortOrder.equals(this.getString(R.string.favorite))) {   //p3
             Toast.makeText(getApplicationContext(), "Scroll down ", Toast.LENGTH_SHORT).show();
             initViews2();
-        } else {
-
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void loadless(View view) {
-
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String sortOrder = preferences.getString(
                 this.getString(R.string.pref_sort_order_key),
@@ -309,12 +303,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             LoadMorePageNumber -= 1;
             if (LoadLessPageNumber >= FirstPageNumber) {
                 try {
-                    if (BuildConfig.THE_STAR_WAR_API_TOKEN.isEmpty()) {
-                        Toast.makeText(getApplicationContext(), "Please obtain API Key Firstly", Toast.LENGTH_SHORT).show();
-                        pd.dismiss();
-                        return;
-                    }
-
                     Client Client = new Client();
                     Service apiService =
                             Client.getClient().create(Service.class);
@@ -329,19 +317,20 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             if (swipeContainer.isRefreshing()) {
                                 swipeContainer.setRefreshing(false);
                             }
-                            mCharacterList = characters;//+++++++fe
+                            mCharacterList = characters;
                             Toast.makeText(getApplicationContext(), "Character: " + "Current Page: " + LoadMorePageNumber + call, Toast.LENGTH_SHORT).show();
                         }
 
+                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                         @Override
                         public void onFailure(Call<CharactersResponse> call, Throwable t) {
 
-                            Log.d("Error", t.getMessage());
+                            Log.d("Error", Objects.requireNonNull(t.getMessage()));
                             Toast.makeText(MainActivity.this, "Error Fetching Data! OR Internet Problem", Toast.LENGTH_SHORT).show();
                         }
                     });
                 } catch (Exception e) {
-                    Log.d("Error", e.getMessage());
+                    Log.d("Error", Objects.requireNonNull(e.getMessage()));
                     Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
                 }
             } else {
@@ -350,13 +339,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 Toast.makeText(getApplicationContext(), "Character: " + " this is the last page: " + LoadMorePageNumber, Toast.LENGTH_SHORT).show();
                 return;
             }
-        } else if (sortOrder.equals(this.getString(R.string.favorite))) {
+        }
+        if (sortOrder.equals(this.getString(R.string.favorite))) {
             Toast.makeText(getApplicationContext(), "Scroll Up", Toast.LENGTH_SHORT).show();
         }
-         else {
-        }
     }
-
 
     @Override
     public boolean onQueryTextSubmit(String query) {

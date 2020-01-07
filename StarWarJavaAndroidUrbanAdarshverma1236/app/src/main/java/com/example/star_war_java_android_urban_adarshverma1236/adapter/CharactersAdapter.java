@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -23,13 +24,13 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.My
 
     private Context mContext;
     private List<Character> mCharacterList;
-    private String PictureURL1 = "https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/stormtrooper-star-wars-storm-trooper-original-oil-painting-black-velvet-r073-ramirezramirez.jpg";
 
     public CharactersAdapter(Context mContext, List<Character> characterList) {
         this.mContext = mContext;
         this.mCharacterList = characterList;
     }
 
+    @NonNull
     @Override
     public CharactersAdapter.MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
@@ -42,7 +43,7 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.My
         viewHolder.name.setText(mCharacterList.get(i).getName());
         viewHolder.mass.setText(mCharacterList.get(i).getMass());
 
-        String poster = PictureURL1;
+        String poster = "https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/stormtrooper-star-wars-storm-trooper-original-oil-painting-black-velvet-r073-ramirezramirez.jpg";
 
         Glide.with(mContext)
                 .load(poster)
@@ -55,15 +56,15 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.My
         return mCharacterList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, mass;
-        public ImageView thumbnail;
+    class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView name, mass;
+        ImageView thumbnail;
 
-        public MyViewHolder(View view) {
+        MyViewHolder(View view) {
             super(view);
-            name = (TextView) view.findViewById(R.id.name);
-            mass = (TextView) view.findViewById(R.id.mass);
-            thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
+            name = view.findViewById(R.id.name);
+            mass = view.findViewById(R.id.mass);
+            thumbnail = view.findViewById(R.id.thumbnail);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

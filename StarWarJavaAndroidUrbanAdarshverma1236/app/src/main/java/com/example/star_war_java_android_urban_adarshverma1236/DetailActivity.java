@@ -3,12 +3,14 @@ package com.example.star_war_java_android_urban_adarshverma1236;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -20,6 +22,8 @@ import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Objects;
+
 import static com.example.star_war_java_android_urban_adarshverma1236.MainActivity.LOG_TAG;
 
 public class DetailActivity extends AppCompatActivity {
@@ -28,9 +32,7 @@ public class DetailActivity extends AppCompatActivity {
     ImageView imageView;
 
     private FavoriteDbHelper favoriteDbHelper;
-    private Character favorite;
     private final AppCompatActivity activity = DetailActivity.this;
-    private String PictureURL2 = "https://mcdn.wallpapersafari.com/medium/96/57/UXFOuz.jpg";
 
     private SQLiteDatabase mDb;
 
@@ -38,30 +40,31 @@ public class DetailActivity extends AppCompatActivity {
     String thumbnail, Bname, Bmass, Bhaircolor, Bskincolor, Beyecolor, Bbirthyear, Bgender, Bhomeworld, Bcreated, Bedited, Burl;
     String mcharacter_id;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         //TODO
         FavoriteDbHelper dbHelper = new FavoriteDbHelper(this);
         mDb = dbHelper.getWritableDatabase();
 
-        imageView = (ImageView) findViewById(R.id.thumbnail_image_header);
-        Aname = (TextView) findViewById(R.id.title);
-        Amass = (TextView) findViewById(R.id.mass);
-        Ahaircolor = (TextView) findViewById(R.id.haircolor);
-        Askincolor = (TextView) findViewById(R.id.skincolor);
-        Aeyecolor = (TextView) findViewById(R.id.eyecolor);
-        Abirthyear = (TextView) findViewById(R.id.birthyear);
-        Agender = (TextView) findViewById(R.id.gender);
-        Ahomeworld = (TextView) findViewById(R.id.homeworld);
-        Acreated = (TextView) findViewById(R.id.created);
-        Aedited = (TextView) findViewById(R.id.edited);
-        Aurl = (TextView) findViewById(R.id.url);
+        imageView = findViewById(R.id.thumbnail_image_header);
+        Aname = findViewById(R.id.title);
+        Amass = findViewById(R.id.mass);
+        Ahaircolor = findViewById(R.id.haircolor);
+        Askincolor = findViewById(R.id.skincolor);
+        Aeyecolor = findViewById(R.id.eyecolor);
+        Abirthyear = findViewById(R.id.birthyear);
+        Agender = findViewById(R.id.gender);
+        Ahomeworld = findViewById(R.id.homeworld);
+        Acreated = findViewById(R.id.created);
+        Aedited = findViewById(R.id.edited);
+        Aurl = findViewById(R.id.url);
 
         Intent intentThatStartedThisActivity = getIntent();
         if (intentThatStartedThisActivity.hasExtra("characters")) {
@@ -69,6 +72,7 @@ public class DetailActivity extends AppCompatActivity {
             mCharacter = new Character();
             mCharacter = getIntent().getParcelableExtra("characters");
 
+            assert mCharacter != null;
             thumbnail = mCharacter.getUrl();
             Bname = mCharacter.getName();
             Bmass = mCharacter.getMass();
@@ -82,10 +86,9 @@ public class DetailActivity extends AppCompatActivity {
             Bedited = mCharacter.getEdited();
             Burl = mCharacter.getUrl();
             String[] str = mCharacter.getUrl().split("/");//splitting for ID
-            String idmo = (str[str.length - 1]);
-            mcharacter_id = idmo;
+            mcharacter_id = (str[str.length - 1]);
 
-            String poster = PictureURL2;
+            String poster = "https://mcdn.wallpapersafari.com/medium/96/57/UXFOuz.jpg";
             Glide.with(this)
                     .load(poster)
                     .placeholder(R.drawable.load)
@@ -109,7 +112,7 @@ public class DetailActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No API Data", Toast.LENGTH_SHORT).show();
         }
-        MaterialFavoriteButton materialFavoriteButton = (MaterialFavoriteButton) findViewById(R.id.favorite_button);
+        MaterialFavoriteButton materialFavoriteButton = findViewById(R.id.favorite_button);
         try {
             if (Exists(Bname)) {
                 materialFavoriteButton.setFavorite(true);
@@ -117,7 +120,7 @@ public class DetailActivity extends AppCompatActivity {
                         new MaterialFavoriteButton.OnFavoriteChangeListener() {
                             @Override
                             public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
-                                if (favorite == true) {
+                                if (favorite) {
                                     saveFavorite();
                                     Snackbar.make(buttonView, "Added to Favorite",
                                             Snackbar.LENGTH_SHORT).show();
@@ -134,14 +137,15 @@ public class DetailActivity extends AppCompatActivity {
             } else {
                 materialFavoriteButton.setOnFavoriteChangeListener(
                         new MaterialFavoriteButton.OnFavoriteChangeListener() {
+                            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                             @Override
                             public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
-                                if (favorite == true) {
+                                if (favorite) {
                                     saveFavorite();
                                     Snackbar.make(buttonView, "Added to Favorite",
                                             Snackbar.LENGTH_SHORT).show();
                                 } else {
-                                    int mcharacter_id = getIntent().getExtras().getInt("id");
+                                    int mcharacter_id = Objects.requireNonNull(getIntent().getExtras()).getInt("id");
                                     favoriteDbHelper = new FavoriteDbHelper(DetailActivity.this);
                                     favoriteDbHelper.deleteFavorite(mcharacter_id);
                                     Snackbar.make(buttonView, "Removed from Favorite",
@@ -149,11 +153,9 @@ public class DetailActivity extends AppCompatActivity {
                                 }
                             }
                         });
-
-
             }
         } catch (Exception e) {
-            Log.d("Error", e.getMessage());
+            Log.d("Error", Objects.requireNonNull(e.getMessage()));
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
@@ -188,13 +190,13 @@ public class DetailActivity extends AppCompatActivity {
 
     public void saveFavorite() {
         favoriteDbHelper = new FavoriteDbHelper(activity);
-        favorite = new Character();
+        Character favorite = new Character();
         String[] str = Burl.split("/");//Splitting for ID
-        int idmo = Integer.parseInt(str[str.length - 1]);
+        int id = Integer.parseInt(str[str.length - 1]);
 
         favorite.setHeight(mcharacter_id);
         Log.d(LOG_TAG, "id 1: " + mcharacter_id);
-        Log.d(LOG_TAG, "id 2: " + idmo);
+        Log.d(LOG_TAG, "id 2: " + id);
         Log.d(LOG_TAG, "id 3: " + Burl);
 
         favorite.setName(Bname);

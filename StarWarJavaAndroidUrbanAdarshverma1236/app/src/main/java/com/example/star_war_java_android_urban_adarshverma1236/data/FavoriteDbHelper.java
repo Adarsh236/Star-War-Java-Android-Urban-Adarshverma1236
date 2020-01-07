@@ -16,18 +16,12 @@ public class FavoriteDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "favorite1.db";
     private static final int DATABASE_VERSION = 1;
-    public static final String LOGTAG = "FAVORITE";
+    private static final String LOGTAG = "FAVORITE";
 
-    SQLiteOpenHelper dbhandler;
-    SQLiteDatabase db;
+    private SQLiteOpenHelper dbhandler;
 
     public FavoriteDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
-
-    public void open() {
-        Log.i(LOGTAG, "Database Opened");
-        db = dbhandler.getWritableDatabase();
     }
 
     public void close() {
