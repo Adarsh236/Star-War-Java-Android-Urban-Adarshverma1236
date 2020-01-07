@@ -3,6 +3,5 @@
     <string-array name="pref_sort_order">
         <item>@string/pref_people</item>
         <item>@string/favorite</item>
-
     </string-array>
 </resources>

@@ -1,12 +1,5 @@
 package com.example.star_war_java_android_urban_adarshverma1236;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -23,11 +16,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.example.star_war_java_android_urban_adarshverma1236.adapter.CharactersAdapter;
 import com.example.star_war_java_android_urban_adarshverma1236.api.Client;
 import com.example.star_war_java_android_urban_adarshverma1236.api.Service;
 import com.example.star_war_java_android_urban_adarshverma1236.data.FavoriteDbHelper;
 import com.example.star_war_java_android_urban_adarshverma1236.model.Character;
+import com.example.star_war_java_android_urban_adarshverma1236.model.CharacterComparator;
 import com.example.star_war_java_android_urban_adarshverma1236.model.CharactersResponse;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     ProgressDialog pd;
     private SwipeRefreshLayout swipeContainer;
     private FavoriteDbHelper favoriteDbHelper;
-    private AppCompatActivity activity = MainActivity.this;////p3
+    private AppCompatActivity activity = MainActivity.this;
     public static final String LOG_TAG = CharactersAdapter.class.getName();
     private int FirstPageNumber = 1;
     private int LastpageNumber = 9;
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         getAllFavorite();
     }
 
-    // finish
+    // calling api
     private void loadJSON() {
 
         try {
@@ -142,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 @Override
                 public void onResponse(Call<CharactersResponse> call, Response<CharactersResponse> response) {
                     List<Character> characters = response.body().getResults();
-                    Collections.sort(characters, Character.BY_NAME_ALPHABETICAL);//**********************
+                    Collections.sort(characters, CharacterComparator.BY_NAME_ALPHABETICAL);//implement comparator
                     recyclerView.setAdapter(new CharactersAdapter(getApplicationContext(), characters));
                     recyclerView.smoothScrollToPosition(0);
                     if (swipeContainer.isRefreshing()) {
@@ -260,7 +261,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         @Override
                         public void onResponse(Call<CharactersResponse> call, Response<CharactersResponse> response) {
                             List<Character> characters = response.body().getResults();
-                            Collections.sort(characters, Character.BY_NAME_ALPHABETICAL);
+                            Collections.sort(characters, CharacterComparator.BY_NAME_ALPHABETICAL);
                             recyclerView.setAdapter(new CharactersAdapter(getApplicationContext(), characters));
                             recyclerView.smoothScrollToPosition(0);
                             if (swipeContainer.isRefreshing()) {
@@ -322,7 +323,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         @Override
                         public void onResponse(Call<CharactersResponse> call, Response<CharactersResponse> response) {
                             List<Character> characters = response.body().getResults();
-                            Collections.sort(characters, Character.BY_NAME_ALPHABETICAL);
+                            Collections.sort(characters, CharacterComparator.BY_NAME_ALPHABETICAL);
                             recyclerView.setAdapter(new CharactersAdapter(getApplicationContext(), characters));
                             recyclerView.smoothScrollToPosition(0);
                             if (swipeContainer.isRefreshing()) {

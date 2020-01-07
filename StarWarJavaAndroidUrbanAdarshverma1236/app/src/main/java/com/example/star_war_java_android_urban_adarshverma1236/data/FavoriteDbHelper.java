@@ -15,9 +15,7 @@ import java.util.List;
 public class FavoriteDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "favorite1.db";
-
     private static final int DATABASE_VERSION = 1;
-
     public static final String LOGTAG = "FAVORITE";
 
     SQLiteOpenHelper dbhandler;
@@ -54,7 +52,6 @@ public class FavoriteDbHelper extends SQLiteOpenHelper {
                 FavoriteContract.FavoriteEntry.COLUMN_EDITED + " TEXT, " +
                 FavoriteContract.FavoriteEntry.COLUMN_URL + " TEXT " +
                 "); ";
-
         sqLiteDatabase.execSQL(SQL_CREATE_FAVORITE_TABLE);
     }
 
@@ -140,12 +137,10 @@ public class FavoriteDbHelper extends SQLiteOpenHelper {
                 character.setUrl(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_URL)));
 
                 favoriteList.add(character);
-
             } while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
-
         return favoriteList;
     }
 }

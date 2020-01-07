@@ -7,6 +7,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface Service {
+
     @GET("people/")
     Call<CharactersResponse> getPeople(@Query("page") int pageIndex);
+
 }

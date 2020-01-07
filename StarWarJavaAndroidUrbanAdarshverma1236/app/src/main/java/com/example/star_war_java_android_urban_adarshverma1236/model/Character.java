@@ -6,7 +6,6 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class Character implements Parcelable {
@@ -66,18 +65,7 @@ public class Character implements Parcelable {
         this.url = url;
     }
 
-    public Character() {
-
-    }
-    // comparator for name
-    public static final Comparator<Character> BY_NAME_ALPHABETICAL = new Comparator<Character>() {
-        @Override
-        public int compare(Character character, Character t1) {
-
-            return character.name.compareToIgnoreCase(t1.name);
-        }
-    };
-
+    public Character() {    }
 
     public String getName() {
         return name;

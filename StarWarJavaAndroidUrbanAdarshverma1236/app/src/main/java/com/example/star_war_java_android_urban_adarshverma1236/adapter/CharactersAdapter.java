@@ -34,7 +34,6 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.My
     public CharactersAdapter.MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.character_card, viewGroup, false);
-
         return new MyViewHolder(view);
     }
 
@@ -49,7 +48,6 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.My
                 .load(poster)
                 .placeholder(R.drawable.load)
                 .into(viewHolder.thumbnail);
-
     }
 
     @Override
@@ -82,7 +80,7 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.My
             });
         }
     }
-
+    // set filter
     public void setFilter(ArrayList<Character> newList) {
         mCharacterList = new ArrayList<>();
         mCharacterList.addAll(newList);

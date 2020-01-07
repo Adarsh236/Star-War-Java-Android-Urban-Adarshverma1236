@@ -5,21 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/activity_vertical_margin"
-
     android:background="@mipmap/background"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.star_war_java_android_urban_adarshverma1236.MainActivity"
     tools:showIn="@layout/activity_main">
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:layout_above="@+id/linear_layouts2"
         android:clipToPadding="false"
-
         android:scrollbars="vertical" />
 
     <LinearLayout
@@ -33,7 +29,6 @@
             android:id="@+id/loadless"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:layout_alignParentBottom="true"
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:background="@color/colorAccent"
@@ -44,13 +39,10 @@
             android:id="@+id/loadmore"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:layout_alignParentBottom="true"
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:background="@color/colorAccent"
             android:onClick="loadMore"
             android:text="@string/next_page" />
     </LinearLayout>
-
-
 </RelativeLayout>

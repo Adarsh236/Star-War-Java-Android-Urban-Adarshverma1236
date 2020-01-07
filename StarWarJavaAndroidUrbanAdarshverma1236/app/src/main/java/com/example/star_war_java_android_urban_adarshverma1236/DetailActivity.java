@@ -11,26 +11,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.star_war_java_android_urban_adarshverma1236.adapter.CharactersAdapter;
-import com.example.star_war_java_android_urban_adarshverma1236.api.Client;
-import com.example.star_war_java_android_urban_adarshverma1236.api.Service;
 import com.example.star_war_java_android_urban_adarshverma1236.data.FavoriteContract;
 import com.example.star_war_java_android_urban_adarshverma1236.data.FavoriteDbHelper;
 import com.example.star_war_java_android_urban_adarshverma1236.model.Character;
-import com.example.star_war_java_android_urban_adarshverma1236.model.CharactersResponse;
 import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.util.Collections;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static com.example.star_war_java_android_urban_adarshverma1236.MainActivity.LOG_TAG;
 
@@ -48,7 +36,7 @@ public class DetailActivity extends AppCompatActivity {
 
     Character mCharacter;
     String thumbnail, Bname, Bmass, Bhaircolor, Bskincolor, Beyecolor, Bbirthyear, Bgender, Bhomeworld, Bcreated, Bedited, Burl;
-    String mcharacter_id;//+++++++++++
+    String mcharacter_id;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,7 +63,6 @@ public class DetailActivity extends AppCompatActivity {
         Aedited = (TextView) findViewById(R.id.edited);
         Aurl = (TextView) findViewById(R.id.url);
 
-
         Intent intentThatStartedThisActivity = getIntent();
         if (intentThatStartedThisActivity.hasExtra("characters")) {
 
@@ -99,7 +86,6 @@ public class DetailActivity extends AppCompatActivity {
             mcharacter_id = idmo;
 
             String poster = PictureURL2;
-
             Glide.with(this)
                     .load(poster)
                     .placeholder(R.drawable.load)

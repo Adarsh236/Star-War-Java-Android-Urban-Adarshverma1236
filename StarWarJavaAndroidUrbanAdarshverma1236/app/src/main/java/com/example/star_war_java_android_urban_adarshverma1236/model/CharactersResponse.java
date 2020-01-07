@@ -20,7 +20,6 @@ public class CharactersResponse implements Parcelable {
     public int getCount() {
         return count;
     }
-
     public void setCount(int count) {
         this.count = count;
     }
@@ -28,7 +27,6 @@ public class CharactersResponse implements Parcelable {
     public String getNext() {
         return next;
     }
-
     public void setNext(String next) {
         this.next = next;
     }
@@ -36,7 +34,6 @@ public class CharactersResponse implements Parcelable {
     public String getPrevious() {
         return previous;
     }
-
     public void setPrevious(String previous) {
         this.previous = previous;
     }
@@ -44,7 +41,6 @@ public class CharactersResponse implements Parcelable {
     public List<Character> getResults() {
         return results;
     }
-
     public List<Character> getCharacters() {
         return results;
     }
@@ -52,7 +48,6 @@ public class CharactersResponse implements Parcelable {
     public void setResults(List<Character> results) {
         this.results = results;
     }
-
     public void setCharacters(List<Character> results) {
         this.results = results;
     }
@@ -70,8 +65,7 @@ public class CharactersResponse implements Parcelable {
         dest.writeTypedList(this.results);
     }
 
-    public CharactersResponse() {
-    }
+    public CharactersResponse() { }
 
     protected CharactersResponse(Parcel in) {
         this.count = in.readInt();

@@ -6,7 +6,7 @@ public class FavoriteContract {
     public static final class FavoriteEntry implements BaseColumns {
 
         public static final String TABLE_NAME = "favorite";
-        public static final String COLUMN_CHARACTERID = "movieid";
+        public static final String COLUMN_CHARACTERID = "movieid";// CHARACTERID
         public static final String COLUMN_NAME = "title";
         public static final String COLUMN_MASS = "mass";
         public static final String COLUMN_HAIR_COLOR = "haircolor";
