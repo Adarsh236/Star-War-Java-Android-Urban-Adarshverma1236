@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         mCharactersAdapter.notifyDataSetChanged();
 
         favoriteDbHelper = new FavoriteDbHelper(activity);
-
         swipeContainer = findViewById(R.id.main_content);
         swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -285,7 +284,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 return;
             }
         }
-        if (sortOrder.equals(this.getString(R.string.favorite))) {   //p3
+        if (sortOrder.equals(this.getString(R.string.favorite))) {
             Toast.makeText(getApplicationContext(), "Scroll down ", Toast.LENGTH_SHORT).show();
             initViews2();
         }
