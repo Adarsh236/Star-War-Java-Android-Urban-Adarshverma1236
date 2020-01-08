@@ -59,7 +59,7 @@ public class FavoriteDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String[] str = character.getUrl().split("/");//split to get ID
-        String  idmo = (str[str.length-1]);//split to get ID
+        String idmo = (str[str.length - 1]);//split to get ID
 
         ContentValues values = new ContentValues();
         values.put(FavoriteContract.FavoriteEntry.COLUMN_CHARACTERID, idmo);

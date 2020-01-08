@@ -64,7 +64,8 @@ public class Character implements Parcelable {
         this.url = url;
     }
 
-    public Character() {    }
+    public Character() {
+    }
 
     public String getName() {
         return name;
@@ -77,6 +78,7 @@ public class Character implements Parcelable {
     public String getHeight() {
         return height;
     }
+
     public void setHeight(String height) {
         this.height = height;
     }
@@ -84,6 +86,7 @@ public class Character implements Parcelable {
     public String getMass() {
         return mass;
     }
+
     public void setMass(String mass) {
         this.mass = mass;
     }
@@ -91,6 +94,7 @@ public class Character implements Parcelable {
     public String getHaircolor() {
         return haircolor;
     }
+
     public void setHaircolor(String haircolor) {
         this.haircolor = haircolor;
     }
@@ -98,6 +102,7 @@ public class Character implements Parcelable {
     public String getSkincolor() {
         return skincolor;
     }
+
     public void setSkincolor(String skincolor) {
         this.skincolor = skincolor;
     }
@@ -105,6 +110,7 @@ public class Character implements Parcelable {
     public String getEyecolor() {
         return eyecolor;
     }
+
     public void setEyecolor(String eyecolor) {
         this.eyecolor = eyecolor;
     }
@@ -112,6 +118,7 @@ public class Character implements Parcelable {
     public String getBirthyear() {
         return birthyear;
     }
+
     public void setBirthyear(String birthyear) {
         this.birthyear = birthyear;
     }
@@ -119,6 +126,7 @@ public class Character implements Parcelable {
     public String getGender() {
         return gender;
     }
+
     public void setGender(String gender) {
         this.gender = gender;
     }
@@ -126,6 +134,7 @@ public class Character implements Parcelable {
     public String getHomeworld() {
         return homeworld;
     }
+
     public void setHomeworld(String homeworld) {
         this.homeworld = homeworld;
     }
@@ -133,6 +142,7 @@ public class Character implements Parcelable {
     public List<String> getFilms() {
         return films;
     }
+
     public void setFilms(List<String> films) {
         this.films = films;
     }
@@ -140,6 +150,7 @@ public class Character implements Parcelable {
     public List<String> getSpecies() {
         return species;
     }
+
     public void setSpecies(List<String> species) {
         this.species = species;
     }
@@ -147,6 +158,7 @@ public class Character implements Parcelable {
     public List<String> getVehicles() {
         return vehicles;
     }
+
     public void setVehicles(List<String> vehicles) {
         this.vehicles = vehicles;
     }
@@ -154,6 +166,7 @@ public class Character implements Parcelable {
     public List<String> getStarships() {
         return starships;
     }
+
     public void setStarships(List<String> starships) {
         this.starships = starships;
     }
@@ -161,6 +174,7 @@ public class Character implements Parcelable {
     public String getCreated() {
         return created;
     }
+
     public void setCreated(String created) {
         this.created = created;
     }
@@ -168,6 +182,7 @@ public class Character implements Parcelable {
     public String getEdited() {
         return edited;
     }
+
     public void setEdited(String edited) {
         this.edited = edited;
     }
@@ -175,6 +190,7 @@ public class Character implements Parcelable {
     public String getUrl() {
         return url;
     }
+
     public void setUrl(String url) {
         this.url = url;
     }
@@ -236,6 +252,7 @@ public class Character implements Parcelable {
         public Character createFromParcel(Parcel source) {
             return new Character(source);
         }
+
         @Override
         public Character[] newArray(int size) {
             return new Character[size];

@@ -81,6 +81,7 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.My
             });
         }
     }
+
     // set filter
     public void setFilter(ArrayList<Character> newList) {
         mCharacterList = new ArrayList<>();
