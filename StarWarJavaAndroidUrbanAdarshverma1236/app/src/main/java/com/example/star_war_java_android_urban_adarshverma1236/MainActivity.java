@@ -12,7 +12,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.star_war_java_android_urban_adarshverma1236.MainActivityComponent.maGetAllInnerClasses;
+import com.example.star_war_java_android_urban_adarshverma1236.MainActivityComponents.maGetAllInnerClasses;
 import com.example.star_war_java_android_urban_adarshverma1236.data.FavoriteDbHelper;
 
 public class MainActivity extends maGetAllInnerClasses {

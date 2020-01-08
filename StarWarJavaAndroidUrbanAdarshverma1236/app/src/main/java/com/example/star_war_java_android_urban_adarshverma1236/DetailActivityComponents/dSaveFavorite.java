@@ -1,4 +1,4 @@
-package com.example.star_war_java_android_urban_adarshverma1236.DetailActivityComponenets;
+package com.example.star_war_java_android_urban_adarshverma1236.DetailActivityComponents;
 
 import android.os.Build;
 import android.util.Log;
@@ -7,7 +7,7 @@ import androidx.annotation.RequiresApi;
 
 import com.example.star_war_java_android_urban_adarshverma1236.model.Character;
 
-import static com.example.star_war_java_android_urban_adarshverma1236.MainActivityComponent.maVariables.LOG_TAG;
+import static com.example.star_war_java_android_urban_adarshverma1236.MainActivityComponents.maVariables.LOG_TAG;
 
 public abstract class dSaveFavorite extends dCreate {
 

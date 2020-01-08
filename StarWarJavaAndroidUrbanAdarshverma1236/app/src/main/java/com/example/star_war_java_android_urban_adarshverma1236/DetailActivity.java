@@ -8,7 +8,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.star_war_java_android_urban_adarshverma1236.DetailActivityComponenets.dGetAllInnerClasses;
+import com.example.star_war_java_android_urban_adarshverma1236.DetailActivityComponents.dGetAllInnerClasses;
 import com.example.star_war_java_android_urban_adarshverma1236.data.FavoriteDbHelper;
 import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 import com.google.android.material.snackbar.Snackbar;

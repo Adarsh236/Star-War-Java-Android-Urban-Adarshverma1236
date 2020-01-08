@@ -1,4 +1,4 @@
-package com.example.star_war_java_android_urban_adarshverma1236.MainActivityComponent;
+package com.example.star_war_java_android_urban_adarshverma1236.MainActivityComponents;
 
 import android.content.res.Configuration;
 

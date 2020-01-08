@@ -1,4 +1,4 @@
-package com.example.star_war_java_android_urban_adarshverma1236.DetailActivityComponenets;
+package com.example.star_war_java_android_urban_adarshverma1236.DetailActivityComponents;
 
 import android.content.Intent;
 import android.os.Build;
