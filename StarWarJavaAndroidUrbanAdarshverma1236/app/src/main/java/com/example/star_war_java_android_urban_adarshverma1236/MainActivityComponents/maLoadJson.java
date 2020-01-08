@@ -56,6 +56,7 @@ public abstract class maLoadJson extends maVariables {
                 public void onFailure(Call<CharactersResponse> call, Throwable t) {
 
                     Log.d("Error", Objects.requireNonNull(t.getMessage()));
+                    Toast.makeText(getApplicationContext(), "Error Fetching Data! OR Internet Problem", Toast.LENGTH_SHORT).show();
                     //Toast.makeText(MainActivity.this, "Error Fetching Data! OR Internet Problem", Toast.LENGTH_SHORT).show();
                 }
             });

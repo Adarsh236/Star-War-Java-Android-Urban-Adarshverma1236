@@ -28,7 +28,7 @@ public class MainActivity extends maGetAllInnerClasses {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void initialViews1() {
-        InnerClassOfinitialViews1();
+        InnerClassOfinitialViews();
         favoriteDbHelper = new FavoriteDbHelper(activity);
         swipeContainer = findViewById(R.id.main_content);
         swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark);
@@ -44,7 +44,7 @@ public class MainActivity extends maGetAllInnerClasses {
 
     // adding favorite
     private void initialViews2() {
-        InnerClassOfinitialViews2();
+        InnerClassOfinitialViews();
         favoriteDbHelper = new FavoriteDbHelper(activity);
         getAllFavorite();
     }
